@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "status",
+  "version": "${version}",
+  "name": "Status",
+  "description": "Share your status",
+  "authors": [
+    "Max Henkel"
+  ],
+  "contact": {
+    "website": "https://modrepo.de"
+  },
+  "license": "All Rights Reserved",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "de.maxhenkel.status.StatusClient"
+    ],
+    "main": [
+      "de.maxhenkel.status.Status"
+    ]
+  },
+  "mixins": [
+    "status.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": ">=${fabric_version}",
+    "minecraft": "${minecraft_dependency}",
+    "java": ">=16"
+  },
+  "custom": {
+    "status": {
+      "compatibilityVersion": ${compatibility_version}
+    }
+  }
+}

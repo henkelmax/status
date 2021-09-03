@@ -1,0 +1,12 @@
+{
+  "gui.status.title": "Set Your Status",
+  "key.status_gui": "Open Status GUI",
+  "message.status.incompatible_version": "Your status version is not compatible with the servers version.\nPlease install version %s of %s.",
+  "message.status.no_availability": "No Availability",
+  "message.status.do_not_disturb": "Do Not Disturb",
+  "message.status.open": "Open",
+  "message.status.recording": "Recording",
+  "message.status.streaming": "Streaming",
+  "message.status.no_sleep": "No Sleep",
+  "message.status.neutral": "No Status"
+}
