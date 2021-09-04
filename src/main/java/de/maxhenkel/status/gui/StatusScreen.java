@@ -8,83 +8,57 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 public class StatusScreen extends StatusScreenBase {
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(Status.MODID, "textures/gui/gui_status.png");
+    private static final ResourceLocation OUTLINE = new ResourceLocation(Status.MODID, "textures/icons/outline.png");
+    private static final ResourceLocation NO_AVAILABILITY = new ResourceLocation(Status.MODID, "textures/icons/no_availability.png");
     private static final ResourceLocation DND = new ResourceLocation(Status.MODID, "textures/icons/dnd.png");
     private static final ResourceLocation OPEN = new ResourceLocation(Status.MODID, "textures/icons/open.png");
-    private static final ResourceLocation NO_AVAILABILITY = new ResourceLocation(Status.MODID, "textures/icons/no_availability.png");
     private static final ResourceLocation NEUTRAL = new ResourceLocation(Status.MODID, "textures/icons/neutral.png");
     private static final ResourceLocation RECORDING = new ResourceLocation(Status.MODID, "textures/icons/recording.png");
     private static final ResourceLocation STREAMING = new ResourceLocation(Status.MODID, "textures/icons/streaming.png");
     private static final ResourceLocation NO_SLEEP = new ResourceLocation(Status.MODID, "textures/icons/no_sleep.png");
 
-    private AvailabilityButton none;
-    private AvailabilityButton dnd;
-    private AvailabilityButton open;
-    private List<StateButton> stateButtons;
-
     public StatusScreen() {
-        super(new TranslatableComponent("gui.status.title"), 195, 76);
+        super(new TranslatableComponent("gui.status.title"), 145, 180);
     }
 
     @Override
     protected void init() {
         super.init();
-        stateButtons = new ArrayList<>();
 
-        none = new AvailabilityButton(guiLeft + xSize / 2 - 20 - 11, guiTop + 7 + font.lineHeight + 7, NO_AVAILABILITY, Availability.NONE, (button, matrices, mouseX, mouseY) -> {
-            renderTooltip(matrices, Collections.singletonList(new TranslatableComponent("message.status.no_availability").getVisualOrderText()), mouseX, mouseY);
-        });
+        int x = guiLeft + 10 + 20 + 5;
+        int y = guiTop + 7 + font.lineHeight + 7;
+        int width = 100;
+        int height = 20;
+
+        AvailabilityButton none = new AvailabilityButton(x, y, width, height, new TranslatableComponent("message.status.no_availability"), Availability.NONE);
         addRenderableWidget(none);
+        y += height + 1;
 
-        dnd = new AvailabilityButton(guiLeft + xSize / 2 - 10, guiTop + 7 + font.lineHeight + 7, DND, Availability.DO_NOT_DISTURB, (button, matrices, mouseX, mouseY) -> {
-            renderTooltip(matrices, Collections.singletonList(new TranslatableComponent("message.status.do_not_disturb").getVisualOrderText()), mouseX, mouseY);
-        });
+        AvailabilityButton dnd = new AvailabilityButton(x, y, width, height, new TranslatableComponent("message.status.do_not_disturb"), Availability.DO_NOT_DISTURB);
         addRenderableWidget(dnd);
+        y += height + 1;
 
-        open = new AvailabilityButton(guiLeft + xSize / 2 + 11, guiTop + 7 + font.lineHeight + 7, OPEN, Availability.OPEN, (button, matrices, mouseX, mouseY) -> {
-            renderTooltip(matrices, Collections.singletonList(new TranslatableComponent("message.status.open").getVisualOrderText()), mouseX, mouseY);
-        });
+        AvailabilityButton open = new AvailabilityButton(x, y, width, height, new TranslatableComponent("message.status.open"), Availability.OPEN);
         addRenderableWidget(open);
+        y += height + 5;
 
-        StateButton neutral = new StateButton(NEUTRAL, "", (button, matrices, mouseX, mouseY) -> {
-            renderTooltip(matrices, Collections.singletonList(new TranslatableComponent("message.status.neutral").getVisualOrderText()), mouseX, mouseY);
-        });
+        StateButton neutral = new StateButton(x, y, width, height, new TranslatableComponent("message.status.neutral"), "");
         addRenderableWidget(neutral);
-        stateButtons.add(neutral);
+        y += height + 1;
 
-        StateButton recording = new StateButton(RECORDING, "recording", (button, matrices, mouseX, mouseY) -> {
-            renderTooltip(matrices, Collections.singletonList(new TranslatableComponent("message.status.recording").getVisualOrderText()), mouseX, mouseY);
-        });
+        StateButton recording = new StateButton(x, y, width, height, new TranslatableComponent("message.status.recording"), "recording");
         addRenderableWidget(recording);
-        stateButtons.add(recording);
+        y += height + 1;
 
-        StateButton streaming = new StateButton(STREAMING, "streaming", (button, matrices, mouseX, mouseY) -> {
-            renderTooltip(matrices, Collections.singletonList(new TranslatableComponent("message.status.streaming").getVisualOrderText()), mouseX, mouseY);
-        });
+        StateButton streaming = new StateButton(x, y, width, height, new TranslatableComponent("message.status.streaming"), "streaming");
         addRenderableWidget(streaming);
-        stateButtons.add(streaming);
+        y += height + 1;
 
-        StateButton noSleep = new StateButton(NO_SLEEP, "no_sleep", (button, matrices, mouseX, mouseY) -> {
-            renderTooltip(matrices, Collections.singletonList(new TranslatableComponent("message.status.no_sleep").getVisualOrderText()), mouseX, mouseY);
-        });
+        StateButton noSleep = new StateButton(x, y, width, height, new TranslatableComponent("message.status.no_sleep"), "no_sleep");
         addRenderableWidget(noSleep);
-        stateButtons.add(noSleep);
-
-        int buttonY = guiTop + 7 + font.lineHeight + 7 + 2 + 20;
-        int buttonSectionWidth = 20 + 1;
-        int width = stateButtons.size() * buttonSectionWidth - 1;
-        int posLeft = guiLeft + xSize / 2 - width / 2;
-        for (int i = 0; i < stateButtons.size(); i++) {
-            StateButton stateButton = stateButtons.get(i);
-            stateButton.setX(posLeft + buttonSectionWidth * i);
-            stateButton.setY(buttonY);
-        }
     }
 
     @Override
@@ -96,8 +70,43 @@ public class StatusScreen extends StatusScreenBase {
 
         super.render(matrixStack, mouseX, mouseY, partialTicks);
 
+        int x = guiLeft + 10;
+        int y = guiTop + 7 + font.lineHeight + 7;
+        int height = 20;
+
+        renderIcon(matrixStack, NO_AVAILABILITY, x, y + 2);
+        y += height + 1;
+
+        renderIcon(matrixStack, DND, x, y + 2);
+        y += height + 1;
+
+        renderIcon(matrixStack, OPEN, x, y + 2);
+        y += height + 5;
+
+        renderIcon(matrixStack, NEUTRAL, x, y + 2);
+        y += height + 1;
+
+        renderIcon(matrixStack, RECORDING, x, y + 2);
+        y += height + 1;
+
+        renderIcon(matrixStack, STREAMING, x, y + 2);
+        y += height + 1;
+
+        renderIcon(matrixStack, NO_SLEEP, x, y + 2);
+
         int titleWidth = font.width(getTitle());
         font.draw(matrixStack, getTitle().getVisualOrderText(), (float) (guiLeft + (xSize - titleWidth) / 2), guiTop + 7, FONT_COLOR);
+    }
+
+    private void renderIcon(PoseStack poseStack, ResourceLocation texture, int x, int y) {
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
+
+        RenderSystem.setShaderTexture(0, OUTLINE);
+        blit(poseStack, x - 1, y - 1, 0, 0, 18, 18, 32, 32);
+
+        RenderSystem.setShaderTexture(0, texture);
+        blit(poseStack, x, y, 0, 0, 16, 16, 16, 16);
     }
 
 }
