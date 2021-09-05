@@ -6,7 +6,13 @@ import de.maxhenkel.status.events.ClientWorldEvents;
 import de.maxhenkel.status.net.NetManager;
 import de.maxhenkel.status.net.PlayerStatePacket;
 import de.maxhenkel.status.net.PlayerStatesPacket;
+import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.ClickEvent;
+import net.minecraft.network.chat.ComponentUtils;
+import net.minecraft.network.chat.HoverEvent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nullable;
@@ -53,7 +59,11 @@ public class ClientPlayerStateManager {
     }
 
     private PlayerState getDefaultState() {
-        return new PlayerState(Minecraft.getInstance().getUser().getGameProfile().getId(), StatusClient.CLIENT_CONFIG.availability.get(), StatusClient.CLIENT_CONFIG.status.get());
+        if (StatusClient.CLIENT_CONFIG.persistState.get()) {
+            return new PlayerState(Minecraft.getInstance().getUser().getGameProfile().getId(), StatusClient.CLIENT_CONFIG.availability.get(), StatusClient.CLIENT_CONFIG.status.get());
+        } else {
+            return new PlayerState(Minecraft.getInstance().getUser().getGameProfile().getId());
+        }
     }
 
     private void onDisconnect() {
@@ -62,6 +72,22 @@ public class ClientPlayerStateManager {
 
     private void onConnect() {
         syncOwnState();
+        if (StatusClient.CLIENT_CONFIG.showJoinMessage.get()) {
+            showChangeStatusMessage();
+        }
+    }
+
+    private void showChangeStatusMessage() {
+        Minecraft.getInstance().player.sendMessage(ComponentUtils.wrapInSquareBrackets(new TranslatableComponent("message.status.mod_name"))
+                        .withStyle(ChatFormatting.GREEN)
+                        .append(" ")
+                        .append(new TranslatableComponent("message.status.change_status")
+                                .withStyle(style -> style
+                                        .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableComponent("message.status.set_status")))
+                                        .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/status gui"))
+                                ).withStyle(ChatFormatting.WHITE)
+                        )
+                , Util.NIL_UUID);
     }
 
     public void syncOwnState() {
