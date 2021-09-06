@@ -4,7 +4,8 @@
   "package": "de.maxhenkel.status.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
-    "PlayerManagerMixin"
+    "PlayerManagerMixin",
+    "PlayerMixin"
   ],
   "client": [
     "MinecraftMixin",

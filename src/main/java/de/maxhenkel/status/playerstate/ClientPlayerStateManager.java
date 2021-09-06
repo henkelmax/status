@@ -58,9 +58,20 @@ public class ClientPlayerStateManager {
         return state.getAvailability();
     }
 
+    public boolean getNoSleep() {
+        return state.isNoSleep();
+    }
+
+    public void setNoSleep(boolean noSleep) {
+        state.setNoSleep(noSleep);
+        syncOwnState();
+        StatusClient.CLIENT_CONFIG.noSleep.set(noSleep);
+        StatusClient.CLIENT_CONFIG.noSleep.save();
+    }
+
     private PlayerState getDefaultState() {
         if (StatusClient.CLIENT_CONFIG.persistState.get()) {
-            return new PlayerState(Minecraft.getInstance().getUser().getGameProfile().getId(), StatusClient.CLIENT_CONFIG.availability.get(), StatusClient.CLIENT_CONFIG.status.get());
+            return new PlayerState(Minecraft.getInstance().getUser().getGameProfile().getId(), StatusClient.CLIENT_CONFIG.availability.get(), StatusClient.CLIENT_CONFIG.status.get(), StatusClient.CLIENT_CONFIG.noSleep.get());
         } else {
             return new PlayerState(Minecraft.getInstance().getUser().getGameProfile().getId());
         }
@@ -104,7 +115,6 @@ public class ClientPlayerStateManager {
     private static final ResourceLocation NO_AVAILABILITY = new ResourceLocation(Status.MODID, "textures/icons/no_availability.png");
     private static final ResourceLocation RECORDING = new ResourceLocation(Status.MODID, "textures/icons/recording.png");
     private static final ResourceLocation STREAMING = new ResourceLocation(Status.MODID, "textures/icons/streaming.png");
-    private static final ResourceLocation NO_SLEEP = new ResourceLocation(Status.MODID, "textures/icons/no_sleep.png");
     private static final ResourceLocation NEUTRAL = new ResourceLocation(Status.MODID, "textures/icons/neutral.png");
 
     @Nullable
@@ -117,8 +127,6 @@ public class ClientPlayerStateManager {
             return RECORDING;
         } else if (state.getState().equals("streaming")) {
             return STREAMING;
-        } else if (state.getState().equals("no_sleep")) {
-            return NO_SLEEP;
         } else {
             return NEUTRAL;
         }

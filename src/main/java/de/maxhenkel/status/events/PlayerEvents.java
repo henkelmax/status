@@ -19,4 +19,10 @@ public class PlayerEvents {
             listener.accept(player);
         }
     });
+
+    public static final Event<Consumer<ServerPlayer>> PLAYER_SLEEP = EventFactory.createArrayBacked(Consumer.class, (listeners) -> (player) -> {
+        for (Consumer<ServerPlayer> listener : listeners) {
+            listener.accept(player);
+        }
+    });
 }

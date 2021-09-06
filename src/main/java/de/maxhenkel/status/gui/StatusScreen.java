@@ -3,8 +3,10 @@ package de.maxhenkel.status.gui;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import de.maxhenkel.status.Status;
+import de.maxhenkel.status.StatusClient;
 import de.maxhenkel.status.playerstate.Availability;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 
@@ -18,10 +20,9 @@ public class StatusScreen extends StatusScreenBase {
     private static final ResourceLocation NEUTRAL = new ResourceLocation(Status.MODID, "textures/icons/neutral.png");
     private static final ResourceLocation RECORDING = new ResourceLocation(Status.MODID, "textures/icons/recording.png");
     private static final ResourceLocation STREAMING = new ResourceLocation(Status.MODID, "textures/icons/streaming.png");
-    private static final ResourceLocation NO_SLEEP = new ResourceLocation(Status.MODID, "textures/icons/no_sleep.png");
 
     public StatusScreen() {
-        super(new TranslatableComponent("gui.status.title"), 145, 180);
+        super(new TranslatableComponent("gui.status.title"), 145, 184);
     }
 
     @Override
@@ -55,10 +56,17 @@ public class StatusScreen extends StatusScreenBase {
 
         StateButton streaming = new StateButton(x, y, width, height, new TranslatableComponent("message.status.streaming"), "streaming");
         addRenderableWidget(streaming);
-        y += height + 1;
+        y += height + 5;
 
-        StateButton noSleep = new StateButton(x, y, width, height, new TranslatableComponent("message.status.no_sleep"), "no_sleep");
+        BooleanButton noSleep = new BooleanButton(x, y, width, height, new TranslatableComponent("message.status.no_sleep"), () -> StatusClient.STATE_MANAGER.getNoSleep(), () -> {
+            StatusClient.STATE_MANAGER.setNoSleep(true);
+        });
         addRenderableWidget(noSleep);
+
+        BooleanButton disableNoSleep = new BooleanButton(guiLeft + 8, y, 20, 20, new TextComponent("X"), () -> !StatusClient.STATE_MANAGER.getNoSleep(), () -> {
+            StatusClient.STATE_MANAGER.setNoSleep(false);
+        });
+        addRenderableWidget(disableNoSleep);
     }
 
     @Override
@@ -90,9 +98,6 @@ public class StatusScreen extends StatusScreenBase {
         y += height + 1;
 
         renderIcon(matrixStack, STREAMING, x, y + 2);
-        y += height + 1;
-
-        renderIcon(matrixStack, NO_SLEEP, x, y + 2);
 
         int titleWidth = font.width(getTitle());
         font.draw(matrixStack, getTitle().getVisualOrderText(), (float) (guiLeft + (xSize - titleWidth) / 2), guiTop + 7, FONT_COLOR);
