@@ -21,6 +21,7 @@ import java.util.*;
 public class ClientPlayerStateManager {
 
     private PlayerState state;
+    private boolean stateChanged;
     private Map<UUID, PlayerState> states;
 
     public ClientPlayerStateManager() {
@@ -45,6 +46,7 @@ public class ClientPlayerStateManager {
         syncOwnState();
         StatusClient.CLIENT_CONFIG.status.set(s);
         StatusClient.CLIENT_CONFIG.status.save();
+        stateChanged = true;
     }
 
     public void setAvailability(Availability availability) {
@@ -52,6 +54,7 @@ public class ClientPlayerStateManager {
         syncOwnState();
         StatusClient.CLIENT_CONFIG.availability.set(availability);
         StatusClient.CLIENT_CONFIG.availability.save();
+        stateChanged = true;
     }
 
     public Availability getAvailability() {
@@ -67,6 +70,7 @@ public class ClientPlayerStateManager {
         syncOwnState();
         StatusClient.CLIENT_CONFIG.noSleep.set(noSleep);
         StatusClient.CLIENT_CONFIG.noSleep.save();
+        stateChanged = true;
     }
 
     private PlayerState getDefaultState() {
@@ -83,7 +87,7 @@ public class ClientPlayerStateManager {
 
     private void onConnect() {
         syncOwnState();
-        if (StatusClient.CLIENT_CONFIG.showJoinMessage.get()) {
+        if (StatusClient.CLIENT_CONFIG.showJoinMessage.get() && !stateChanged) {
             showChangeStatusMessage();
         }
     }
