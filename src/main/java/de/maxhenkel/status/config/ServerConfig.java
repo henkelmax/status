@@ -1,5 +1,7 @@
 package de.maxhenkel.status.config;
 
+import de.maxhenkel.configbuilder.ConfigBuilder;
+
 public class ServerConfig {
 
     public final ConfigBuilder.ConfigEntry<String> noSleepTitle;

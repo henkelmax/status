@@ -1,8 +1,8 @@
 package de.maxhenkel.status;
 
 import com.mojang.brigadier.builder.ArgumentBuilder;
+import de.maxhenkel.configbuilder.ConfigBuilder;
 import de.maxhenkel.status.config.ClientConfig;
-import de.maxhenkel.status.config.ConfigBuilder;
 import de.maxhenkel.status.gui.StatusScreen;
 import de.maxhenkel.status.playerstate.ClientPlayerStateManager;
 import io.netty.buffer.Unpooled;

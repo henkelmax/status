@@ -1,6 +1,6 @@
 package de.maxhenkel.status;
 
-import de.maxhenkel.status.config.ConfigBuilder;
+import de.maxhenkel.configbuilder.ConfigBuilder;
 import de.maxhenkel.status.config.ServerConfig;
 import de.maxhenkel.status.playerstate.PlayerStateManager;
 import io.netty.buffer.Unpooled;
