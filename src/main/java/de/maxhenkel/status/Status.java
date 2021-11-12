@@ -43,9 +43,7 @@ public class Status implements ModInitializer {
         STATE_MANAGER = new PlayerStateManager();
 
         ServerLifecycleEvents.SERVER_STARTING.register(server -> {
-            if (server instanceof DedicatedServer) {
-                ConfigBuilder.create(server.getServerDirectory().toPath().resolve("config").resolve(MODID).resolve("status-server.properties"), builder -> SERVER_CONFIG = new ServerConfig(builder));
-            }
+            ConfigBuilder.create(server.getServerDirectory().toPath().resolve("config").resolve(MODID).resolve("status-server.properties"), builder -> SERVER_CONFIG = new ServerConfig(builder));
         });
 
         ServerLoginConnectionEvents.QUERY_START.register((handler, server, sender, synchronizer) -> {
@@ -55,7 +53,7 @@ public class Status implements ModInitializer {
         });
         ServerLoginNetworking.registerGlobalReceiver(INIT, (server, handler, understood, buf, synchronizer, responseSender) -> {
             if (!understood) {
-                //Let vanilla clients pass, but not incompatible voice chat clients
+                //Let vanilla clients pass, but not incompatible status clients
                 return;
             }
 
