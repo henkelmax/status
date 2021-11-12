@@ -52,7 +52,7 @@ public class Status implements ModInitializer {
         });
         ServerLoginNetworking.registerGlobalReceiver(INIT, (server, handler, understood, buf, synchronizer, responseSender) -> {
             if (!understood) {
-                //Let vanilla clients pass, but not incompatible voice chat clients
+                //Let vanilla clients pass, but not incompatible status clients
                 return;
             }
 
