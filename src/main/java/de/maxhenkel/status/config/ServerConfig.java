@@ -1,12 +1,13 @@
 package de.maxhenkel.status.config;
 
 import de.maxhenkel.configbuilder.ConfigBuilder;
+import de.maxhenkel.configbuilder.ConfigEntry;
 
 public class ServerConfig {
 
-    public final ConfigBuilder.ConfigEntry<String> noSleepTitle;
-    public final ConfigBuilder.ConfigEntry<String> noSleepPlayerSubtitle;
-    public final ConfigBuilder.ConfigEntry<String> noSleepMultipleSubtitle;
+    public final ConfigEntry<String> noSleepTitle;
+    public final ConfigEntry<String> noSleepPlayerSubtitle;
+    public final ConfigEntry<String> noSleepMultipleSubtitle;
 
     public ServerConfig(ConfigBuilder builder) {
         noSleepTitle = builder.stringEntry("no_sleep_title", "No Sleep");

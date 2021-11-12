@@ -15,7 +15,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.dedicated.DedicatedServer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -43,9 +42,7 @@ public class Status implements ModInitializer {
         STATE_MANAGER = new PlayerStateManager();
 
         ServerLifecycleEvents.SERVER_STARTING.register(server -> {
-            if (server instanceof DedicatedServer) {
-                ConfigBuilder.create(server.getServerDirectory().toPath().resolve("config").resolve(MODID).resolve("status-server.properties"), builder -> SERVER_CONFIG = new ServerConfig(builder));
-            }
+            SERVER_CONFIG = ConfigBuilder.build(server.getServerDirectory().toPath().resolve("config").resolve(MODID).resolve("status-server.properties"), ServerConfig::new);
         });
 
         ServerLoginConnectionEvents.QUERY_START.register((handler, server, sender, synchronizer) -> {

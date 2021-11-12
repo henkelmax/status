@@ -9,7 +9,7 @@ buildscript {
 }
 
 plugins {
-    id "fabric-loom" version "0.8-SNAPSHOT"
+    id "fabric-loom" version "0.10-SNAPSHOT"
     id "com.matthewprenger.cursegradle" version "1.4.0"
     id "com.github.johnrengelman.shadow" version "7.0.0"
 }
@@ -43,8 +43,8 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    implementation 'de.maxhenkel.configbuilder:configbuilder:1.0.0'
-    shadow 'de.maxhenkel.configbuilder:configbuilder:1.0.0'
+    implementation "de.maxhenkel.configbuilder:configbuilder:${configbuilder_version}"
+    shadow "de.maxhenkel.configbuilder:configbuilder:${configbuilder_version}"
 
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
 }
