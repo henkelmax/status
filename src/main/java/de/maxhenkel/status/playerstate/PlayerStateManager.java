@@ -5,7 +5,7 @@ import de.maxhenkel.status.events.PlayerEvents;
 import de.maxhenkel.status.net.NetManager;
 import de.maxhenkel.status.net.PlayerStatePacket;
 import de.maxhenkel.status.net.PlayerStatesPacket;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetSubtitleTextPacket;
 import net.minecraft.network.protocol.game.ClientboundSetTitleTextPacket;
 import net.minecraft.server.MinecraftServer;
@@ -40,11 +40,11 @@ public class PlayerStateManager {
             return;
         }
 
-        player.connection.send(new ClientboundSetTitleTextPacket(new TextComponent(Status.SERVER_CONFIG.noSleepTitle.get())));
+        player.connection.send(new ClientboundSetTitleTextPacket(Component.literal(Status.SERVER_CONFIG.noSleepTitle.get())));
         if (noSleepPlayers.size() > 1) {
-            player.connection.send(new ClientboundSetSubtitleTextPacket(new TextComponent(Status.SERVER_CONFIG.noSleepMultipleSubtitle.get())));
+            player.connection.send(new ClientboundSetSubtitleTextPacket(Component.literal(Status.SERVER_CONFIG.noSleepMultipleSubtitle.get())));
         } else {
-            player.connection.send(new ClientboundSetSubtitleTextPacket(new TextComponent(String.format(Status.SERVER_CONFIG.noSleepPlayerSubtitle.get(), noSleepPlayers.get(0).getDisplayName().getString()))));
+            player.connection.send(new ClientboundSetSubtitleTextPacket(Component.literal(String.format(Status.SERVER_CONFIG.noSleepPlayerSubtitle.get(), noSleepPlayers.get(0).getDisplayName().getString()))));
         }
 
     }

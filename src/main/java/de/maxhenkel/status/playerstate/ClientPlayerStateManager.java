@@ -7,16 +7,16 @@ import de.maxhenkel.status.net.NetManager;
 import de.maxhenkel.status.net.PlayerStatePacket;
 import de.maxhenkel.status.net.PlayerStatesPacket;
 import net.minecraft.ChatFormatting;
-import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.ClickEvent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentUtils;
 import net.minecraft.network.chat.HoverEvent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class ClientPlayerStateManager {
 
@@ -93,16 +93,15 @@ public class ClientPlayerStateManager {
     }
 
     private void showChangeStatusMessage() {
-        Minecraft.getInstance().player.sendMessage(ComponentUtils.wrapInSquareBrackets(new TranslatableComponent("message.status.mod_name"))
-                        .withStyle(ChatFormatting.GREEN)
-                        .append(" ")
-                        .append(new TranslatableComponent("message.status.change_status")
-                                .withStyle(style -> style
-                                        .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableComponent("message.status.set_status")))
-                                        .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/status gui"))
-                                ).withStyle(ChatFormatting.WHITE)
-                        )
-                , Util.NIL_UUID);
+        Minecraft.getInstance().player.sendSystemMessage(ComponentUtils.wrapInSquareBrackets(Component.translatable("message.status.mod_name"))
+                .withStyle(ChatFormatting.GREEN)
+                .append(" ")
+                .append(Component.translatable("message.status.change_status")
+                        .withStyle(style -> style
+                                .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable("message.status.set_status")))
+                        ).withStyle(ChatFormatting.WHITE)
+                )
+        );
     }
 
     public void syncOwnState() {

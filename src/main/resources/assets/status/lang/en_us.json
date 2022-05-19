@@ -3,7 +3,7 @@
   "key.status_gui": "Open Status GUI",
   "message.status.mod_name": "Status",
   "message.status.change_status": "Don't forget to set your status",
-  "message.status.set_status": "Click to set your status",
+  "message.status.set_status": "Open the status GUI to set your status",
   "message.status.incompatible_version": "Your status version is not compatible with the servers version.\nPlease install version %s of %s.",
   "message.status.no_availability": "No Availability",
   "message.status.do_not_disturb": "Do Not Disturb",

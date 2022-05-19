@@ -1,6 +1,5 @@
 package de.maxhenkel.status;
 
-import com.mojang.brigadier.builder.ArgumentBuilder;
 import de.maxhenkel.configbuilder.ConfigBuilder;
 import de.maxhenkel.status.config.ClientConfig;
 import de.maxhenkel.status.gui.StatusScreen;
@@ -9,13 +8,11 @@ import io.netty.buffer.Unpooled;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientLoginNetworking;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraft.commands.Commands;
 import net.minecraft.network.FriendlyByteBuf;
 import org.lwjgl.glfw.GLFW;
 
@@ -46,7 +43,6 @@ public class StatusClient implements ClientModInitializer {
             return CompletableFuture.completedFuture(buffer);
         });
 
-
         KEY_STATUS_GUI = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.status_gui", GLFW.GLFW_KEY_U, "key.categories.misc"));
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
@@ -54,13 +50,5 @@ public class StatusClient implements ClientModInitializer {
                 client.setScreen(new StatusScreen());
             }
         });
-
-        ArgumentBuilder gui = Commands.literal("gui").executes(context -> {
-            Minecraft.getInstance().doRunTask(() -> {
-                Minecraft.getInstance().setScreen(new StatusScreen());
-            });
-            return 1;
-        });
-        ClientCommandManager.DISPATCHER.register(ClientCommandManager.literal("status").then(gui));
     }
 }

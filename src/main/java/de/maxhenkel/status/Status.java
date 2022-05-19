@@ -12,8 +12,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -60,9 +59,9 @@ public class Status implements ModInitializer {
 
             if (clientCompatibilityVersion != Status.COMPATIBILITY_VERSION) {
                 Status.LOGGER.warn("Client {} has incompatible mod version (server={}, client={})", handler.connection.getRemoteAddress(), Status.COMPATIBILITY_VERSION, clientCompatibilityVersion);
-                handler.disconnect(new TranslatableComponent("message.status.incompatible_version",
-                        new TextComponent(getModVersion()).withStyle(ChatFormatting.BOLD),
-                        new TextComponent(getModName()).withStyle(ChatFormatting.BOLD)));
+                handler.disconnect(Component.translatable("message.status.incompatible_version",
+                        Component.literal(getModVersion()).withStyle(ChatFormatting.BOLD),
+                        Component.literal(getModName()).withStyle(ChatFormatting.BOLD)));
             }
         });
     }
@@ -88,7 +87,7 @@ public class Status implements ModInitializer {
         if (modContainer == null) {
             return -1;
         }
-        return modContainer.getMetadata().getCustomValue(MODID).getAsObject().get("compatibilityVersion").getAsNumber().intValue();
+        return Integer.parseInt(modContainer.getMetadata().getCustomValue(MODID).getAsObject().get("compatibilityVersion").getAsString());
     }
 
 }

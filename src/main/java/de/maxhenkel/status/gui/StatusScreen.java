@@ -6,8 +6,7 @@ import de.maxhenkel.status.Status;
 import de.maxhenkel.status.StatusClient;
 import de.maxhenkel.status.playerstate.Availability;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 public class StatusScreen extends StatusScreenBase {
@@ -22,7 +21,7 @@ public class StatusScreen extends StatusScreenBase {
     private static final ResourceLocation STREAMING = new ResourceLocation(Status.MODID, "textures/icons/streaming.png");
 
     public StatusScreen() {
-        super(new TranslatableComponent("gui.status.title"), 145, 184);
+        super(Component.translatable("gui.status.title"), 145, 184);
     }
 
     @Override
@@ -34,36 +33,36 @@ public class StatusScreen extends StatusScreenBase {
         int width = 100;
         int height = 20;
 
-        AvailabilityButton none = new AvailabilityButton(x, y, width, height, new TranslatableComponent("message.status.no_availability"), Availability.NONE);
+        AvailabilityButton none = new AvailabilityButton(x, y, width, height, Component.translatable("message.status.no_availability"), Availability.NONE);
         addRenderableWidget(none);
         y += height + 1;
 
-        AvailabilityButton dnd = new AvailabilityButton(x, y, width, height, new TranslatableComponent("message.status.do_not_disturb"), Availability.DO_NOT_DISTURB);
+        AvailabilityButton dnd = new AvailabilityButton(x, y, width, height, Component.translatable("message.status.do_not_disturb"), Availability.DO_NOT_DISTURB);
         addRenderableWidget(dnd);
         y += height + 1;
 
-        AvailabilityButton open = new AvailabilityButton(x, y, width, height, new TranslatableComponent("message.status.open"), Availability.OPEN);
+        AvailabilityButton open = new AvailabilityButton(x, y, width, height, Component.translatable("message.status.open"), Availability.OPEN);
         addRenderableWidget(open);
         y += height + 5;
 
-        StateButton neutral = new StateButton(x, y, width, height, new TranslatableComponent("message.status.neutral"), "");
+        StateButton neutral = new StateButton(x, y, width, height, Component.translatable("message.status.neutral"), "");
         addRenderableWidget(neutral);
         y += height + 1;
 
-        StateButton recording = new StateButton(x, y, width, height, new TranslatableComponent("message.status.recording"), "recording");
+        StateButton recording = new StateButton(x, y, width, height, Component.translatable("message.status.recording"), "recording");
         addRenderableWidget(recording);
         y += height + 1;
 
-        StateButton streaming = new StateButton(x, y, width, height, new TranslatableComponent("message.status.streaming"), "streaming");
+        StateButton streaming = new StateButton(x, y, width, height, Component.translatable("message.status.streaming"), "streaming");
         addRenderableWidget(streaming);
         y += height + 5;
 
-        BooleanButton noSleep = new BooleanButton(x, y, width, height, new TranslatableComponent("message.status.no_sleep"), () -> StatusClient.STATE_MANAGER.getNoSleep(), () -> {
+        BooleanButton noSleep = new BooleanButton(x, y, width, height, Component.translatable("message.status.no_sleep"), () -> StatusClient.STATE_MANAGER.getNoSleep(), () -> {
             StatusClient.STATE_MANAGER.setNoSleep(true);
         });
         addRenderableWidget(noSleep);
 
-        BooleanButton disableNoSleep = new BooleanButton(guiLeft + 8, y, 20, 20, new TextComponent("X"), () -> !StatusClient.STATE_MANAGER.getNoSleep(), () -> {
+        BooleanButton disableNoSleep = new BooleanButton(guiLeft + 8, y, 20, 20, Component.literal("X"), () -> !StatusClient.STATE_MANAGER.getNoSleep(), () -> {
             StatusClient.STATE_MANAGER.setNoSleep(false);
         });
         addRenderableWidget(disableNoSleep);

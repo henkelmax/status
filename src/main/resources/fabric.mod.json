@@ -31,7 +31,7 @@
   },
   "custom": {
     "status": {
-      "compatibilityVersion": ${compatibility_version}
+      "compatibilityVersion": "${compatibility_version}"
     }
   }
 }
