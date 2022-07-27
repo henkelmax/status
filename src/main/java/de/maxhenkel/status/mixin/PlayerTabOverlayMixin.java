@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import de.maxhenkel.status.StatusClient;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.components.PlayerFaceRenderer;
 import net.minecraft.client.gui.components.PlayerTabOverlay;
 import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.network.Connection;
@@ -48,14 +49,11 @@ public class PlayerTabOverlayMixin {
         return playerInfo.getProfile();
     }
 
-    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiComponent;blit(Lcom/mojang/blaze3d/vertex/PoseStack;IIIIFFIIII)V", ordinal = 0))
-    private void onRenderHead(PoseStack poseStack, int x, int y, int texX, int texY, float f, float g, int m, int n, int o, int p) {
+    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/components/PlayerFaceRenderer;draw(Lcom/mojang/blaze3d/vertex/PoseStack;IIIZZ)V"))
+    private void onRenderHead(PoseStack poseStack, int x, int y, int size, boolean upsideDown, boolean renderHat) {
         int shaderTexture = RenderSystem.getShaderTexture(0);
 
-        poseStack.pushPose();
-        poseStack.translate(x, y, 0D);
-        GuiComponent.blit(poseStack, 0, 0, texX, texY, f, g, m, n, o, p);
-        poseStack.popPose();
+        PlayerFaceRenderer.draw(poseStack, x, y, size, upsideDown, renderHat);
 
         ResourceLocation icon = StatusClient.STATE_MANAGER.getIcon(playerUUID);
         if (icon != null) {
