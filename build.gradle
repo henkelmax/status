@@ -20,9 +20,9 @@ apply plugin: 'forge-update'
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
-archivesBaseName = project.archives_base_name
-version = project.mod_version
-group = project.maven_group
+archivesBaseName = archives_base_name
+version = mod_version
+group = maven_group
 
 repositories {
     mavenLocal()
@@ -39,10 +39,10 @@ runClient.doFirst {
 }
 
 dependencies {
-    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    minecraft "com.mojang:minecraft:${minecraft_version}"
     mappings loom.officialMojangMappings()
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    modImplementation "net.fabricmc:fabric-loader:${loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
 
     implementation "de.maxhenkel.configbuilder:configbuilder:${configbuilder_version}"
     shadow "de.maxhenkel.configbuilder:configbuilder:${configbuilder_version}"
@@ -52,11 +52,11 @@ dependencies {
 
 processResources {
     filesMatching("fabric.mod.json") {
-        expand "version": project.version,
-                "minecraft_dependency": project.minecraft_dependency,
-                "loader_version": project.loader_version,
-                "fabric_version": project.fabric_version,
-                "compatibility_version": project.mod_compatibility_version
+        expand "version": version,
+                "minecraft_dependency": minecraft_dependency,
+                "loader_version": loader_version,
+                "fabric_version": fabric_version,
+                "compatibility_version": mod_compatibility_version
     }
 }
 
@@ -71,7 +71,7 @@ java {
 
 jar {
     from("LICENSE") {
-        rename { "${it}_${project.archivesBaseName}" }
+        rename { "${it}_${archivesBaseName}" }
     }
 }
 
@@ -85,7 +85,7 @@ curseforge {
         addGameVersion curseforge_minecraft_version
         addGameVersion "Fabric"
         addGameVersion "Java 17"
-        mainArtifact(file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar")) {
+        mainArtifact(file("${buildDir}/libs/${archivesBaseName}-${version}.jar")) {
             displayName = "[FABRIC][${minecraft_version}] ${mod_name} ${mod_version}"
             relations {
                 requiredDependency 'fabric-api'

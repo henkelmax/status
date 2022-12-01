@@ -32,8 +32,8 @@ public class AvailabilityButton extends AbstractButton {
     }
 
     @Override
-    public void updateNarration(NarrationElementOutput narrationElementOutput) {
-        this.defaultButtonNarrationText(narrationElementOutput);
+    protected void updateWidgetNarration(NarrationElementOutput narrationElementOutput) {
+        defaultButtonNarrationText(narrationElementOutput);
     }
 
 }
