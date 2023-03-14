@@ -25,9 +25,9 @@ public class StateButton extends AbstractButton {
     }
 
     @Override
-    public void renderButton(PoseStack matrices, int mouseX, int mouseY, float delta) {
+    public void renderWidget(PoseStack matrices, int mouseX, int mouseY, float delta) {
         active = !isStateActive();
-        super.renderButton(matrices, mouseX, mouseY, delta);
+        super.renderWidget(matrices, mouseX, mouseY, delta);
     }
 
     @Override

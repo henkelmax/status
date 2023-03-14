@@ -58,7 +58,7 @@ public class Status implements ModInitializer {
             int clientCompatibilityVersion = buf.readInt();
 
             if (clientCompatibilityVersion != Status.COMPATIBILITY_VERSION) {
-                Status.LOGGER.warn("Client {} has incompatible mod version (server={}, client={})", handler.connection.getRemoteAddress(), Status.COMPATIBILITY_VERSION, clientCompatibilityVersion);
+                Status.LOGGER.warn("Client {} has incompatible mod version (server={}, client={})", handler.getUserName(), Status.COMPATIBILITY_VERSION, clientCompatibilityVersion);
                 handler.disconnect(Component.translatable("message.status.incompatible_version",
                         Component.literal(getModVersion()).withStyle(ChatFormatting.BOLD),
                         Component.literal(getModName()).withStyle(ChatFormatting.BOLD)));

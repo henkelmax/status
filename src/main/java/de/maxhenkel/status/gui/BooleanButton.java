@@ -24,9 +24,9 @@ public class BooleanButton extends AbstractButton {
     }
 
     @Override
-    public void renderButton(PoseStack matrices, int mouseX, int mouseY, float delta) {
+    public void renderWidget(PoseStack matrices, int mouseX, int mouseY, float delta) {
         active = !value.get();
-        super.renderButton(matrices, mouseX, mouseY, delta);
+        super.renderWidget(matrices, mouseX, mouseY, delta);
     }
 
     @Override
