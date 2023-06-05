@@ -1,7 +1,7 @@
 package de.maxhenkel.status.gui;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import de.maxhenkel.status.StatusClient;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
@@ -25,9 +25,9 @@ public class StateButton extends AbstractButton {
     }
 
     @Override
-    public void renderWidget(PoseStack matrices, int mouseX, int mouseY, float delta) {
+    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
         active = !isStateActive();
-        super.renderWidget(matrices, mouseX, mouseY, delta);
+        super.renderWidget(guiGraphics, mouseX, mouseY, delta);
     }
 
     @Override

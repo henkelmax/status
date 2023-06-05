@@ -1,10 +1,10 @@
 package de.maxhenkel.status.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import de.maxhenkel.status.Status;
 import de.maxhenkel.status.StatusClient;
 import de.maxhenkel.status.playerstate.Availability;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -69,48 +69,44 @@ public class StatusScreen extends StatusScreenBase {
     }
 
     @Override
-    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
-        RenderSystem.setShaderTexture(0, TEXTURE);
-        blit(matrixStack, guiLeft, guiTop, 0, 0, xSize, ySize);
+        guiGraphics.blit(TEXTURE, guiLeft, guiTop, 0, 0, xSize, ySize);
 
-        super.render(matrixStack, mouseX, mouseY, partialTicks);
+        super.render(guiGraphics, mouseX, mouseY, partialTicks);
 
         int x = guiLeft + 10;
         int y = guiTop + 7 + font.lineHeight + 7;
         int height = 20;
 
-        renderIcon(matrixStack, NO_AVAILABILITY, x, y + 2);
+        renderIcon(guiGraphics, NO_AVAILABILITY, x, y + 2);
         y += height + 1;
 
-        renderIcon(matrixStack, DND, x, y + 2);
+        renderIcon(guiGraphics, DND, x, y + 2);
         y += height + 1;
 
-        renderIcon(matrixStack, OPEN, x, y + 2);
+        renderIcon(guiGraphics, OPEN, x, y + 2);
         y += height + 5;
 
-        renderIcon(matrixStack, NEUTRAL, x, y + 2);
+        renderIcon(guiGraphics, NEUTRAL, x, y + 2);
         y += height + 1;
 
-        renderIcon(matrixStack, RECORDING, x, y + 2);
+        renderIcon(guiGraphics, RECORDING, x, y + 2);
         y += height + 1;
 
-        renderIcon(matrixStack, STREAMING, x, y + 2);
+        renderIcon(guiGraphics, STREAMING, x, y + 2);
 
         int titleWidth = font.width(getTitle());
-        font.draw(matrixStack, getTitle().getVisualOrderText(), (float) (guiLeft + (xSize - titleWidth) / 2), guiTop + 7, FONT_COLOR);
+        guiGraphics.drawString(font, getTitle(), guiLeft + (xSize - titleWidth) / 2, guiTop + 7, FONT_COLOR, false);
     }
 
-    private void renderIcon(PoseStack poseStack, ResourceLocation texture, int x, int y) {
+    private void renderIcon(GuiGraphics guiGraphics, ResourceLocation texture, int x, int y) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
 
-        RenderSystem.setShaderTexture(0, OUTLINE);
-        blit(poseStack, x - 1, y - 1, 0, 0, 18, 18, 32, 32);
-
-        RenderSystem.setShaderTexture(0, texture);
-        blit(poseStack, x, y, 0, 0, 16, 16, 16, 16);
+        guiGraphics.blit(OUTLINE, x - 1, y - 1, 0, 0, 18, 18, 32, 32);
+        guiGraphics.blit(texture, x, y, 0, 0, 16, 16, 16, 16);
     }
 
 }

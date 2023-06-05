@@ -2,17 +2,16 @@ package de.maxhenkel.status.mixin;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import de.maxhenkel.status.StatusClient;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.PlayerFaceRenderer;
 import net.minecraft.client.gui.components.PlayerTabOverlay;
 import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.network.Connection;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FormattedCharSequence;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -27,12 +26,12 @@ public class PlayerTabOverlayMixin {
         return true;
     }
 
-    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Font;drawShadow(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/network/chat/Component;FFI)I"))
-    private int onDrawShadow(Font font, PoseStack poseStack, Component component, float f, float g, int i) {
-        poseStack.pushPose();
-        poseStack.translate(9D, 0D, 0D);
-        int x = font.drawShadow(poseStack, component, f, g, i);
-        poseStack.popPose();
+    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;drawString(Lnet/minecraft/client/gui/Font;Lnet/minecraft/util/FormattedCharSequence;III)I"))
+    private int onDrawShadow(GuiGraphics instance, Font font, FormattedCharSequence formattedCharSequence, int i, int j, int k) {
+        instance.pose().pushPose();
+        instance.pose().translate(9D, 0D, 0D);
+        int x = instance.drawString(font, formattedCharSequence, i, j, k);
+        instance.pose().popPose();
         return x;
     }
 
@@ -49,28 +48,26 @@ public class PlayerTabOverlayMixin {
         return playerInfo.getProfile();
     }
 
-    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/components/PlayerFaceRenderer;draw(Lcom/mojang/blaze3d/vertex/PoseStack;IIIZZ)V"))
-    private void onRenderHead(PoseStack poseStack, int x, int y, int size, boolean upsideDown, boolean renderHat) {
+    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/components/PlayerFaceRenderer;draw(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/resources/ResourceLocation;IIIZZ)V"))
+    private void onRenderHead(GuiGraphics guiGraphics, ResourceLocation resourceLocation, int x, int y, int size, boolean upsideDown, boolean renderHat) {
         int shaderTexture = RenderSystem.getShaderTexture(0);
 
-        PlayerFaceRenderer.draw(poseStack, x, y, size, upsideDown, renderHat);
+        PlayerFaceRenderer.draw(guiGraphics, resourceLocation, x, y, size, upsideDown, renderHat);
 
         ResourceLocation icon = StatusClient.STATE_MANAGER.getIcon(playerUUID);
         if (icon != null) {
-            RenderSystem.setShaderTexture(0, icon);
-            poseStack.pushPose();
-            poseStack.translate(x + 9D, y, 0D);
-            GuiComponent.blit(poseStack, 0, 0, 0, 0, 8, 8, 8, 8);
-            poseStack.popPose();
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().translate(x + 9D, y, 0D);
+            guiGraphics.blit(icon, 0, 0, 0, 0, 8, 8, 8, 8);
+            guiGraphics.pose().popPose();
         }
 
         ResourceLocation overlay = StatusClient.STATE_MANAGER.getOverlay(playerUUID);
         if (overlay != null) {
-            RenderSystem.setShaderTexture(0, overlay);
-            poseStack.pushPose();
-            poseStack.translate(x + 9D, y, 0D);
-            GuiComponent.blit(poseStack, 0, 0, 0, 0, 8, 8, 8, 8);
-            poseStack.popPose();
+            guiGraphics.pose().pushPose();
+            guiGraphics.pose().translate(x + 9D, y, 0D);
+            guiGraphics.blit(overlay, 0, 0, 0, 0, 8, 8, 8, 8);
+            guiGraphics.pose().popPose();
         }
 
         RenderSystem.setShaderTexture(0, shaderTexture);
