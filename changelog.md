@@ -1,1 +1,1 @@
-- Updated to 1.20.1
+- Fixed tab list rendering issues
