@@ -1,0 +1,15 @@
+{
+    "gui.status.title": "Establece tu estado",
+    "key.status_gui": "Abre la GUI de Status",
+    "message.status.mod_name": "Status",
+    "message.status.change_status": "No olvides establecer tu estado",
+    "message.status.set_status": "Abre la GUI de Status para establecer tu estado",
+    "message.status.incompatible_version": "Tu versión de Status no es compatible con la versión instalada en el servidor.\nPor favor, instala la versión %s de %s.",
+    "message.status.no_availability": "No disponible",
+    "message.status.do_not_disturb": "No molestar",
+    "message.status.open": "Disponible",
+    "message.status.recording": "Grabando",
+    "message.status.streaming": "Retransmitiendo",
+    "message.status.no_sleep": "No dormir",
+    "message.status.neutral": "Sin estado"
+  }
