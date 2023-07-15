@@ -1,1 +1,1 @@
-- Fixed tab list rendering issues
+- Added spanish translation
