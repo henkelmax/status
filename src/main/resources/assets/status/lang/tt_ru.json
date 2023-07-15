@@ -1,10 +1,11 @@
 {
+  "modmenu.descriptionTranslation.status": "Халәтегез белән уртаклашыгыз",
   "gui.status.title": "Халәтегезне урнатшырыгыз",
   "key.status_gui": "Халәт интерфейсын ачу",
   "message.status.mod_name": "Халәт",
   "message.status.change_status": "Үзегезнең халәтегезне урнатшырырга онытмагыз",
   "message.status.set_status": "Халәтегезне урнаштыру өчен халәт интерфейсын ачыгыз",
-  "message.status.incompatible_version": "Сезнең мод версиясе серверның версия белән ярашлы түгел.\nЗинһар, %1$s модының %2$s версиясен утыртыгыз.",
+  "message.status.incompatible_version": "Сезнең мод версиясе серверның версия белән ярашлы түгел.\nЗинһар, «%2$s» модының %1$s версиясен утыртыгыз.",
   "message.status.no_availability": "Мөмкинлексез",
   "message.status.do_not_disturb": "Борчымаска",
   "message.status.open": "Ачык",
