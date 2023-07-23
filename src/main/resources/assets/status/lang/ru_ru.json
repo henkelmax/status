@@ -1,0 +1,15 @@
+{
+  "gui.status.title": "Установите ваш статус",
+  "key.status_gui": "Откройте интерфейс статуса",
+  "message.status.mod_name": "Статус",
+  "message.status.change_status": "Не забудьте установить ваш статус",
+  "message.status.set_status": "Откройте интерфейс статус, чтобы его установить",
+  "message.status.incompatible_version": "Ваша версия статус несовместима с версией на сервере.\nПожалуйста установите версию %s %s.",
+  "message.status.no_availability": "Занят",
+  "message.status.do_not_disturb": "Не беспокоить",
+  "message.status.open": "Свободен",
+  "message.status.recording": "Запись",
+  "message.status.streaming": "Стриминг",
+  "message.status.no_sleep": "Без сна",
+  "message.status.neutral": "Нет статуса"
+}
