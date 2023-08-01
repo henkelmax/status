@@ -1,0 +1,15 @@
+{
+  "gui.status.title": "ステータスしっていすん",
+  "key.status_gui": "ステータスGUIふぃらちゅん",
+  "message.status.mod_name": "ステータス",
+  "message.status.change_status": "ステータスぬしっていわしとーいびーん",
+  "message.status.set_status": "ステータスGUIふぃらちステータスしっていさびーん",
+  "message.status.incompatible_version": "うちかいぬステータスぬバージョンーサーバーぬバージョンとーぐかんせいがあいびらん。\n%sぬバージョン%sインストールしみそーれー。",
+  "message.status.no_availability": "たいしぇーきちゅう",
+  "message.status.do_not_disturb": "とぅりくみちゅう",
+  "message.status.open": "オープン",
+  "message.status.recording": "るいちゅるうんちゅう",
+  "message.status.streaming": "はいしんちゅう",
+  "message.status.no_sleep": "にんだらん",
+  "message.status.neutral": "ステータスなし"
+}
