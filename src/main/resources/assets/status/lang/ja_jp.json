@@ -1,0 +1,15 @@
+{
+  "gui.status.title": "ステータスを設定する",
+  "key.status_gui": "ステータスGUIを開く",
+  "message.status.mod_name": "ステータス",
+  "message.status.change_status": "ステータスの設定を忘れています",
+  "message.status.set_status": "ステータスGUIを開いてステータスを設定します",
+  "message.status.incompatible_version": "お使いのステータスのバージョンはサーバーのバージョンとは互換性がありません。\n%sのバージョン%sをインストールしてください。",
+  "message.status.no_availability": "退席中",
+  "message.status.do_not_disturb": "取り込み中",
+  "message.status.open": "オープン",
+  "message.status.recording": "録音中",
+  "message.status.streaming": "配信中",
+  "message.status.no_sleep": "眠れない",
+  "message.status.neutral": "ステータスなし"
+}
