@@ -69,11 +69,16 @@ public class StatusScreen extends StatusScreenBase {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    public void renderBackground(GuiGraphics guiGraphics, int i, int j, float f) {
+        super.renderBackground(guiGraphics, i, j, f);
+
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
         guiGraphics.blit(TEXTURE, guiLeft, guiTop, 0, 0, xSize, ySize);
+    }
 
+    @Override
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
 
         int x = guiLeft + 10;

@@ -1,1 +1,1 @@
-- Added Japanese translation
+- Updated to 1.20.2

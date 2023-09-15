@@ -25,9 +25,11 @@
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",
-    "fabric": ">=${fabric_version}",
     "minecraft": "${minecraft_dependency}",
     "java": ">=17"
+  },
+  "breaks": {
+    "fabric-api": "<${min_fabric_version}"
   },
   "custom": {
     "status": {

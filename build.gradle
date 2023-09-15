@@ -28,7 +28,18 @@ dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
     mappings loom.officialMojangMappings()
     modImplementation "net.fabricmc:fabric-loader:${loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+
+    Set<String> apiModules = [
+            'fabric-api-base',
+            'fabric-lifecycle-events-v1',
+            'fabric-networking-api-v1',
+            'fabric-resource-loader-v0',
+            'fabric-key-binding-api-v1'
+    ]
+
+    apiModules.forEach {
+        include(modImplementation(fabricApi.module(it, fabric_version)))
+    }
 
     implementation "de.maxhenkel.configbuilder:configbuilder:${configbuilder_version}"
     shadow "de.maxhenkel.configbuilder:configbuilder:${configbuilder_version}"
@@ -41,7 +52,7 @@ processResources {
         expand 'version': version,
                 'minecraft_dependency': minecraft_dependency,
                 'loader_version': loader_version,
-                'fabric_version': fabric_version,
+                'min_fabric_version': fabric_version,
                 'compatibility_version': mod_compatibility_version
     }
 }

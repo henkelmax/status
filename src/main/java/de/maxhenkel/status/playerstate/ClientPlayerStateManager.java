@@ -75,9 +75,9 @@ public class ClientPlayerStateManager {
 
     private PlayerState getDefaultState() {
         if (StatusClient.CLIENT_CONFIG.persistState.get()) {
-            return new PlayerState(Minecraft.getInstance().getUser().getGameProfile().getId(), StatusClient.CLIENT_CONFIG.availability.get(), StatusClient.CLIENT_CONFIG.status.get(), StatusClient.CLIENT_CONFIG.noSleep.get());
+            return new PlayerState(Minecraft.getInstance().getUser().getProfileId(), StatusClient.CLIENT_CONFIG.availability.get(), StatusClient.CLIENT_CONFIG.status.get(), StatusClient.CLIENT_CONFIG.noSleep.get());
         } else {
-            return new PlayerState(Minecraft.getInstance().getUser().getGameProfile().getId());
+            return new PlayerState(Minecraft.getInstance().getUser().getProfileId());
         }
     }
 
