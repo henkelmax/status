@@ -1,1 +1,2 @@
 - Updated dependencies
+- Added mod icon
