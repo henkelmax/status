@@ -1,7 +1,7 @@
 package de.maxhenkel.status.config;
 
 import de.maxhenkel.configbuilder.ConfigBuilder;
-import de.maxhenkel.configbuilder.ConfigEntry;
+import de.maxhenkel.configbuilder.entry.ConfigEntry;
 import de.maxhenkel.status.playerstate.Availability;
 
 public class ClientConfig {
