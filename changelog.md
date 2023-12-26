@@ -1,1 +1,1 @@
-- Added Japanese translation
+- Updated dependencies

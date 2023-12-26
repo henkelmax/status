@@ -1,133 +1,19 @@
 plugins {
-    id 'fabric-loom' version '1.2-SNAPSHOT'
-    id 'com.matthewprenger.cursegradle' version '1.4.0'
-    id 'com.github.johnrengelman.shadow' version '8.1.1'
-    id 'com.modrinth.minotaur' version '2.+'
-    id 'mod-update' version '2.0.0'
+    id 'com.github.johnrengelman.shadow' version "${shadow_version}"
+    id 'fabric-loom' version "${fabric_loom_version}"
+    id 'mod-update' version "${mod_update_version}"
+    id 'com.matthewprenger.cursegradle' version "${cursegradle_version}"
+    id 'com.modrinth.minotaur' version "${minotaur_version}"
 }
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
-
-archivesBaseName = archives_base_name
-version = mod_version
-group = maven_group
-
-repositories {
-    mavenLocal()
-    mavenCentral()
-    maven { url = 'https://maven.fabricmc.net/' }
-    maven { url = 'https://maven.maxhenkel.de/repository/public'}
-}
-
-runClient.doFirst {
-    args = ['--username', "henkelmax${new Random().nextInt(1000)}"]
-}
-
-dependencies {
-    minecraft "com.mojang:minecraft:${minecraft_version}"
-    mappings loom.officialMojangMappings()
-    modImplementation "net.fabricmc:fabric-loader:${loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
-
-    implementation "de.maxhenkel.configbuilder:configbuilder:${configbuilder_version}"
-    shadow "de.maxhenkel.configbuilder:configbuilder:${configbuilder_version}"
-
-    implementation 'com.google.code.findbugs:jsr305:3.0.2'
-}
+apply from: "https://raw.githubusercontent.com/henkelmax/mod-gradle-scripts/${mod_gradle_script_version}/mod.gradle"
 
 processResources {
     filesMatching('fabric.mod.json') {
-        expand 'version': version,
+        expand 'mod_version': mod_version,
                 'minecraft_dependency': minecraft_dependency,
-                'loader_version': loader_version,
-                'fabric_version': fabric_version,
+                'fabric_loader_dependency': fabric_loader_dependency,
+                'fabric_api_dependency_breaks': fabric_api_dependency_breaks,
                 'compatibility_version': mod_compatibility_version
     }
-}
-
-tasks.withType(JavaCompile).configureEach {
-    it.options.encoding = 'UTF-8'
-    it.options.release = 17
-}
-
-java {
-    withSourcesJar()
-}
-
-jar {
-    from('LICENSE') {
-        rename { "${it}_${archivesBaseName}" }
-    }
-}
-
-curseforge {
-    apiKey = file('curseforge_api_key.txt').exists() ? file('curseforge_api_key.txt').text : ''
-    project {
-        id = curse_id
-        changelogType = 'markdown'
-        changelog = file('changelog.md')
-        releaseType = release_type
-        addGameVersion curseforge_minecraft_version
-        addGameVersion 'Fabric'
-        addGameVersion 'Java 17'
-        mainArtifact(file("${buildDir}/libs/${archivesBaseName}-${version}.jar")) {
-            displayName = "[FABRIC][${minecraft_version}] ${mod_name} ${mod_version}"
-            relations {
-                requiredDependency 'fabric-api'
-            }
-        }
-        afterEvaluate {
-            uploadTask.dependsOn(remapJar)
-        }
-    }
-    options {
-        forgeGradleIntegration = false
-    }
-}
-
-tasks.modrinth.configure({
-    group = 'upload'
-})
-tasks.modrinthSyncBody.configure({
-    group = 'upload'
-})
-
-modrinth {
-    token = file("${rootDir}/modrinth_token.txt").exists() ? file("${rootDir}/modrinth_token.txt").text : ''
-    projectId = modrinth_id
-    versionNumber = "fabric-${mod_version}"
-    versionName = "[FABRIC][${minecraft_version}] ${mod_name} ${mod_version}"
-    uploadFile = remapJar
-    versionType = release_type.toUpperCase()
-    changelog = file('changelog.md').text
-    gameVersions = [minecraft_version]
-    loaders = ['fabric']
-    dependencies {
-        required.project 'P7dR8mSH' // Fabric API
-    }
-    syncBodyFrom = file("${rootDir}/readme.md").text
-}
-tasks.modrinth.dependsOn(build)
-
-modUpdate {
-    serverURL = 'https://update.maxhenkel.de/'
-    modID = mod_id
-    gameVersion = minecraft_version
-    modLoader = 'fabric'
-    modVersion = mod_version
-    changelogFile = file('changelog.md')
-    releaseType = release_type
-    tags = recommended == 'true' ? ['recommended'] : []
-}
-
-shadowJar {
-    configurations = [project.configurations.shadow]
-    archiveClassifier = 'shadow-dev'
-    relocate 'de.maxhenkel.configbuilder', "de.maxhenkel.${mod_id}.configbuilder"
-}
-
-remapJar {
-    dependsOn shadowJar
-    inputFile = shadowJar.archiveFile.get()
 }

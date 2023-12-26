@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "status",
-  "version": "${version}",
+  "version": "${mod_version}",
   "name": "Status",
   "description": "Share your status",
   "authors": [
@@ -24,10 +24,12 @@
     "status.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=${loader_version}",
+    "fabricloader": "${fabric_loader_dependency}",
     "fabric": ">=${fabric_version}",
-    "minecraft": "${minecraft_dependency}",
-    "java": ">=17"
+    "minecraft": "${minecraft_dependency}"
+  },
+  "breaks": {
+    "fabric-api": "${fabric_api_dependency_breaks}"
   },
   "custom": {
     "status": {
