@@ -28,7 +28,10 @@ public class StatusClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        CLIENT_CONFIG = ConfigBuilder.build(Minecraft.getInstance().gameDirectory.toPath().resolve("config").resolve(Status.MODID).resolve("state-client.properties"), ClientConfig::new);
+        CLIENT_CONFIG = ConfigBuilder
+                .builder(ClientConfig::new)
+                .path(Minecraft.getInstance().gameDirectory.toPath().resolve("config").resolve(Status.MODID).resolve("state-client.properties"))
+                .build();
 
         STATE_MANAGER = new ClientPlayerStateManager();
         ClientLoginNetworking.registerGlobalReceiver(Status.INIT, (client, handler, buf, listenerAdder) -> {
