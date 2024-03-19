@@ -1,7 +1,7 @@
 {
   "gui.status.title": "تعيين حالتك",
   "key.status_gui": "افتح واجهة المستخدم للحالة",
-  "message.status.mod_name": "الحالة",
+  "message.status.mod_name": "Status",
   "message.status.change_status": "لا تنسى تعيين حالتك",
   "message.status.set_status": "افتح واجهة المستخدم للحالة لتعيين حالتك",
   "message.status.incompatible_version": "إصدارك غير متوافق مع إصدار الخادم.\nيرجى تثبيت الإصدار %s من %s.",
