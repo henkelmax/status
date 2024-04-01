@@ -1,2 +1,1 @@
-- Updated dependencies
-- Added mod icon
+- Added arabic translation
