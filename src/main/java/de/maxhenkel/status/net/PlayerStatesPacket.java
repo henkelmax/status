@@ -2,7 +2,9 @@ package de.maxhenkel.status.net;
 
 import de.maxhenkel.status.Status;
 import de.maxhenkel.status.playerstate.PlayerState;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.HashMap;
@@ -11,9 +13,23 @@ import java.util.UUID;
 
 public class PlayerStatesPacket implements Packet<PlayerStatesPacket> {
 
-    private Map<UUID, PlayerState> playerStates;
+    public static final Type<PlayerStatesPacket> PLAYER_STATES = new CustomPacketPayload.Type<>(new ResourceLocation(Status.MODID, "states"));
 
-    public static final ResourceLocation PLAYER_STATES = new ResourceLocation(Status.MODID, "states");
+    public static final StreamCodec<RegistryFriendlyByteBuf, PlayerStatesPacket> CODEC = new StreamCodec<>() {
+        @Override
+        public void encode(RegistryFriendlyByteBuf buf, PlayerStatesPacket packet) {
+            packet.toBytes(buf);
+        }
+
+        @Override
+        public PlayerStatesPacket decode(RegistryFriendlyByteBuf buf) {
+            PlayerStatesPacket packet = new PlayerStatesPacket();
+            packet.fromBytes(buf);
+            return packet;
+        }
+    };
+
+    private Map<UUID, PlayerState> playerStates;
 
     public PlayerStatesPacket() {
 
@@ -28,12 +44,7 @@ public class PlayerStatesPacket implements Packet<PlayerStatesPacket> {
     }
 
     @Override
-    public ResourceLocation getID() {
-        return PLAYER_STATES;
-    }
-
-    @Override
-    public PlayerStatesPacket fromBytes(FriendlyByteBuf buf) {
+    public PlayerStatesPacket fromBytes(RegistryFriendlyByteBuf buf) {
         playerStates = new HashMap<>();
         int count = buf.readInt();
         for (int i = 0; i < count; i++) {
@@ -45,11 +56,16 @@ public class PlayerStatesPacket implements Packet<PlayerStatesPacket> {
     }
 
     @Override
-    public void toBytes(FriendlyByteBuf buf) {
+    public void toBytes(RegistryFriendlyByteBuf buf) {
         buf.writeInt(playerStates.size());
         for (Map.Entry<UUID, PlayerState> entry : playerStates.entrySet()) {
             entry.getValue().toBytes(buf);
         }
+    }
+
+    @Override
+    public Type<PlayerStatesPacket> type() {
+        return PLAYER_STATES;
     }
 
 }

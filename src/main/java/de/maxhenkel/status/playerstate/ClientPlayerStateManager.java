@@ -3,9 +3,9 @@ package de.maxhenkel.status.playerstate;
 import de.maxhenkel.status.Status;
 import de.maxhenkel.status.StatusClient;
 import de.maxhenkel.status.events.ClientWorldEvents;
-import de.maxhenkel.status.net.NetManager;
 import de.maxhenkel.status.net.PlayerStatePacket;
 import de.maxhenkel.status.net.PlayerStatesPacket;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -27,10 +27,10 @@ public class ClientPlayerStateManager {
     public ClientPlayerStateManager() {
         state = getDefaultState();
         states = new HashMap<>();
-        NetManager.registerClientReceiver(PlayerStatePacket.class, (client, handler, responseSender, packet) -> {
+        ClientPlayNetworking.registerGlobalReceiver(PlayerStatePacket.PLAYER_STATE, (packet, context) -> {
             states.put(packet.getPlayerState().getPlayer(), packet.getPlayerState());
         });
-        NetManager.registerClientReceiver(PlayerStatesPacket.class, (client, handler, responseSender, packet) -> {
+        ClientPlayNetworking.registerGlobalReceiver(PlayerStatesPacket.PLAYER_STATES, (packet, context) -> {
             states = packet.getPlayerStates();
         });
         ClientWorldEvents.DISCONNECT.register(this::onDisconnect);
@@ -105,7 +105,7 @@ public class ClientPlayerStateManager {
     }
 
     public void syncOwnState() {
-        NetManager.sendToServer(new PlayerStatePacket(state));
+        ClientPlayNetworking.send(new PlayerStatePacket(state));
     }
 
     @Nullable

@@ -2,9 +2,9 @@ package de.maxhenkel.status.playerstate;
 
 import de.maxhenkel.status.Status;
 import de.maxhenkel.status.events.PlayerEvents;
-import de.maxhenkel.status.net.NetManager;
 import de.maxhenkel.status.net.PlayerStatePacket;
 import de.maxhenkel.status.net.PlayerStatesPacket;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetSubtitleTextPacket;
 import net.minecraft.network.protocol.game.ClientboundSetTitleTextPacket;
@@ -25,11 +25,12 @@ public class PlayerStateManager {
         PlayerEvents.PLAYER_LOGGED_IN.register(this::notifyPlayer);
         PlayerEvents.PLAYER_SLEEP.register(this::onSleep);
 
-        NetManager.registerServerReceiver(PlayerStatePacket.class, (server, player, handler, responseSender, packet) -> {
+        ServerPlayNetworking.registerGlobalReceiver(PlayerStatePacket.PLAYER_STATE, (packet, context) -> {
+            ServerPlayer player = context.player();
             PlayerState state = packet.getPlayerState();
             state.setPlayer(player.getUUID());
             states.put(player.getUUID(), state);
-            broadcastState(server, state);
+            broadcastState(player.server, state);
         });
     }
 
@@ -64,12 +65,12 @@ public class PlayerStateManager {
 
     private void broadcastState(MinecraftServer server, PlayerState state) {
         PlayerStatePacket packet = new PlayerStatePacket(state);
-        server.getPlayerList().getPlayers().forEach(p -> NetManager.sendToClient(p, packet));
+        server.getPlayerList().getPlayers().forEach(p -> ServerPlayNetworking.send(p, packet));
     }
 
     private void notifyPlayer(ServerPlayer player) {
         PlayerStatesPacket packet = new PlayerStatesPacket(states);
-        NetManager.sendToClient(player, packet);
+        ServerPlayNetworking.send(player, packet);
         broadcastState(player.server, new PlayerState(player.getUUID()));
     }
 

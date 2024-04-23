@@ -2,10 +2,13 @@ package de.maxhenkel.status;
 
 import de.maxhenkel.configbuilder.ConfigBuilder;
 import de.maxhenkel.status.config.ServerConfig;
+import de.maxhenkel.status.net.PlayerStatePacket;
+import de.maxhenkel.status.net.PlayerStatesPacket;
 import de.maxhenkel.status.playerstate.PlayerStateManager;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerLoginConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerLoginNetworking;
 import net.fabricmc.loader.api.FabricLoader;
@@ -38,6 +41,11 @@ public class Status implements ModInitializer {
         } catch (Exception e) {
             LOGGER.error("Failed to read compatibility version");
         }
+
+        PayloadTypeRegistry.playC2S().register(PlayerStatePacket.PLAYER_STATE, PlayerStatePacket.CODEC);
+        PayloadTypeRegistry.playS2C().register(PlayerStatePacket.PLAYER_STATE, PlayerStatePacket.CODEC);
+        PayloadTypeRegistry.playS2C().register(PlayerStatesPacket.PLAYER_STATES, PlayerStatesPacket.CODEC);
+
         STATE_MANAGER = new PlayerStateManager();
 
         ServerLifecycleEvents.SERVER_STARTING.register(server -> {

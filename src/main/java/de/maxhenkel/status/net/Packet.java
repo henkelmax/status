@@ -1,14 +1,15 @@
 package de.maxhenkel.status.net;
 
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 
-public interface Packet<T extends Packet> {
+public interface Packet<T extends Packet<T>> extends CustomPacketPayload {
 
-    ResourceLocation getID();
+    T fromBytes(RegistryFriendlyByteBuf buf);
 
-    T fromBytes(FriendlyByteBuf buf);
+    void toBytes(RegistryFriendlyByteBuf buf);
 
-    void toBytes(FriendlyByteBuf buf);
+    @Override
+    Type<T> type();
 
 }
