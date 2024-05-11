@@ -33,7 +33,7 @@ This message will also be shown to players that don't have the mod installed.
 
 ![](https://i.imgur.com/2NoywQA.png)
 
-When joining a server the first time in your playing session, you will get a clickable message that will remind you to
+When joining a server the first time in your playing session, you will get a message that will remind you to
 set your status. The status is not persisted between playing sessions by default.
 
 ![](https://i.imgur.com/8dglntP.png)
