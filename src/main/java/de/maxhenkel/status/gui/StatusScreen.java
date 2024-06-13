@@ -11,14 +11,14 @@ import net.minecraft.resources.ResourceLocation;
 
 public class StatusScreen extends StatusScreenBase {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Status.MODID, "textures/gui/gui_status.png");
-    private static final ResourceLocation OUTLINE = new ResourceLocation(Status.MODID, "textures/icons/outline.png");
-    private static final ResourceLocation NO_AVAILABILITY = new ResourceLocation(Status.MODID, "textures/icons/no_availability.png");
-    private static final ResourceLocation DND = new ResourceLocation(Status.MODID, "textures/icons/dnd.png");
-    private static final ResourceLocation OPEN = new ResourceLocation(Status.MODID, "textures/icons/open.png");
-    private static final ResourceLocation NEUTRAL = new ResourceLocation(Status.MODID, "textures/icons/neutral.png");
-    private static final ResourceLocation RECORDING = new ResourceLocation(Status.MODID, "textures/icons/recording.png");
-    private static final ResourceLocation STREAMING = new ResourceLocation(Status.MODID, "textures/icons/streaming.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/gui/gui_status.png");
+    private static final ResourceLocation OUTLINE = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/outline.png");
+    private static final ResourceLocation NO_AVAILABILITY = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/no_availability.png");
+    private static final ResourceLocation DND = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/dnd.png");
+    private static final ResourceLocation OPEN = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/open.png");
+    private static final ResourceLocation NEUTRAL = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/neutral.png");
+    private static final ResourceLocation RECORDING = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/recording.png");
+    private static final ResourceLocation STREAMING = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/streaming.png");
 
     public StatusScreen() {
         super(Component.translatable("gui.status.title"), 145, 184);

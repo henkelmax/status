@@ -30,7 +30,7 @@ public class Status implements ModInitializer {
     public static ServerConfig SERVER_CONFIG;
     public static PlayerStateManager STATE_MANAGER;
 
-    public static final ResourceLocation INIT = new ResourceLocation(Status.MODID, "init");
+    public static final ResourceLocation INIT = ResourceLocation.fromNamespaceAndPath(Status.MODID, "init");
     public static int COMPATIBILITY_VERSION = -1;
 
     @Override
@@ -51,7 +51,7 @@ public class Status implements ModInitializer {
         ServerLifecycleEvents.SERVER_STARTING.register(server -> {
             SERVER_CONFIG = ConfigBuilder
                     .builder(ServerConfig::new)
-                    .path(server.getServerDirectory().toPath().resolve("config").resolve(MODID).resolve("status-server.properties"))
+                    .path(server.getServerDirectory().resolve("config").resolve(MODID).resolve("status-server.properties"))
                     .build();
         });
 

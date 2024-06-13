@@ -13,7 +13,7 @@ import java.util.UUID;
 
 public class PlayerStatesPacket implements Packet<PlayerStatesPacket> {
 
-    public static final Type<PlayerStatesPacket> PLAYER_STATES = new CustomPacketPayload.Type<>(new ResourceLocation(Status.MODID, "states"));
+    public static final Type<PlayerStatesPacket> PLAYER_STATES = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(Status.MODID, "states"));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, PlayerStatesPacket> CODEC = new StreamCodec<>() {
         @Override

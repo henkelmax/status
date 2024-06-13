@@ -9,7 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class PlayerStatePacket implements Packet<PlayerStatePacket> {
 
-    public static final Type<PlayerStatePacket> PLAYER_STATE = new CustomPacketPayload.Type<>(new ResourceLocation(Status.MODID, "state"));
+    public static final Type<PlayerStatePacket> PLAYER_STATE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(Status.MODID, "state"));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, PlayerStatePacket> CODEC = new StreamCodec<>() {
         @Override
