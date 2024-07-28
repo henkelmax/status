@@ -7,6 +7,7 @@
   "message.status.incompatible_version": "Your status version is not compatible with the servers version.\nPlease install version %s of %s.",
   "message.status.no_availability": "No Availability",
   "message.status.do_not_disturb": "Do Not Disturb",
+  "message.status.rp_only": "Role Play Only",
   "message.status.open": "Open",
   "message.status.recording": "Recording",
   "message.status.streaming": "Streaming",

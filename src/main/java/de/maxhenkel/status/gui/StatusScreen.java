@@ -15,13 +15,14 @@ public class StatusScreen extends StatusScreenBase {
     private static final ResourceLocation OUTLINE = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/outline.png");
     private static final ResourceLocation NO_AVAILABILITY = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/no_availability.png");
     private static final ResourceLocation DND = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/dnd.png");
+    private static final ResourceLocation RP_ONLY = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/rp_only.png");
     private static final ResourceLocation OPEN = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/open.png");
     private static final ResourceLocation NEUTRAL = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/neutral.png");
     private static final ResourceLocation RECORDING = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/recording.png");
     private static final ResourceLocation STREAMING = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/streaming.png");
 
     public StatusScreen() {
-        super(Component.translatable("gui.status.title"), 145, 184);
+        super(Component.translatable("gui.status.title"), 145, 210);
     }
 
     @Override
@@ -39,6 +40,10 @@ public class StatusScreen extends StatusScreenBase {
 
         AvailabilityButton dnd = new AvailabilityButton(x, y, width, height, Component.translatable("message.status.do_not_disturb"), Availability.DO_NOT_DISTURB);
         addRenderableWidget(dnd);
+        y += height + 1;
+
+        AvailabilityButton rp_only = new AvailabilityButton(x, y, width, height, Component.translatable("message.status.rp_only"), Availability.RP_ONLY);
+        addRenderableWidget(rp_only);
         y += height + 1;
 
         AvailabilityButton open = new AvailabilityButton(x, y, width, height, Component.translatable("message.status.open"), Availability.OPEN);
@@ -89,6 +94,9 @@ public class StatusScreen extends StatusScreenBase {
         y += height + 1;
 
         renderIcon(guiGraphics, DND, x, y + 2);
+        y += height + 1;
+
+        renderIcon(guiGraphics, RP_ONLY, x, y + 2);
         y += height + 1;
 
         renderIcon(guiGraphics, OPEN, x, y + 2);

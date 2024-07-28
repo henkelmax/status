@@ -2,7 +2,7 @@ package de.maxhenkel.status.playerstate;
 
 public enum Availability {
 
-    NONE(""), DO_NOT_DISTURB("do_not_disturb"), OPEN("open");
+    NONE(""), DO_NOT_DISTURB("do_not_disturb"), OPEN("open"), RP_ONLY("rp_only");
 
     private final String name;
 

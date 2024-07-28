@@ -1,4 +1,8 @@
 # Status
+This mod is a fork of the original project available at [henkelmax Github](https://github.com/henkelmax/status) for metacraft SMP.
+- add Role play Status 
+
+---
 
 A [Fabric](https://fabricmc.net/) mod that enables you to set a status.
 

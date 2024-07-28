@@ -117,6 +117,7 @@ public class ClientPlayerStateManager {
     }
 
     private static final ResourceLocation DND = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/dnd.png");
+    private static final ResourceLocation RP_ONLY = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/rp_only.png");
     private static final ResourceLocation OPEN = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/open.png");
     private static final ResourceLocation NO_AVAILABILITY = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/no_availability.png");
     private static final ResourceLocation RECORDING = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/recording.png");
@@ -148,6 +149,8 @@ public class ClientPlayerStateManager {
             return DND;
         } else if (state.getAvailability().equals(Availability.OPEN)) {
             return OPEN;
+        } else if (state.getAvailability().equals(Availability.RP_ONLY)) {
+            return RP_ONLY;
         }
         return NO_AVAILABILITY;
     }
