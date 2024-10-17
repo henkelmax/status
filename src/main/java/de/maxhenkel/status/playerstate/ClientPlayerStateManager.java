@@ -93,7 +93,7 @@ public class ClientPlayerStateManager {
     }
 
     private void showChangeStatusMessage() {
-        Minecraft.getInstance().player.sendSystemMessage(ComponentUtils.wrapInSquareBrackets(Component.translatable("message.status.mod_name"))
+        Minecraft.getInstance().gui.getChat().addMessage(ComponentUtils.wrapInSquareBrackets(Component.translatable("message.status.mod_name"))
                 .withStyle(ChatFormatting.GREEN)
                 .append(" ")
                 .append(Component.translatable("message.status.change_status")

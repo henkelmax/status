@@ -1,11 +1,10 @@
 package de.maxhenkel.status.gui;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import de.maxhenkel.status.Status;
 import de.maxhenkel.status.StatusClient;
 import de.maxhenkel.status.playerstate.Availability;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
@@ -71,10 +70,7 @@ public class StatusScreen extends StatusScreenBase {
     @Override
     public void renderBackground(GuiGraphics guiGraphics, int i, int j, float f) {
         super.renderBackground(guiGraphics, i, j, f);
-
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
-        guiGraphics.blit(TEXTURE, guiLeft, guiTop, 0, 0, xSize, ySize);
+        guiGraphics.blit(RenderType::guiTextured, TEXTURE, guiLeft, guiTop, 0, 0, xSize, ySize, 256, 256);
     }
 
     @Override
@@ -107,11 +103,8 @@ public class StatusScreen extends StatusScreenBase {
     }
 
     private void renderIcon(GuiGraphics guiGraphics, ResourceLocation texture, int x, int y) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
-
-        guiGraphics.blit(OUTLINE, x - 1, y - 1, 0, 0, 18, 18, 32, 32);
-        guiGraphics.blit(texture, x, y, 0, 0, 16, 16, 16, 16);
+        guiGraphics.blit(RenderType::guiTextured, OUTLINE, x - 1, y - 1, 0, 0, 18, 18, 32, 32);
+        guiGraphics.blit(RenderType::guiTextured, texture, x, y, 0, 0, 16, 16, 16, 16);
     }
 
 }

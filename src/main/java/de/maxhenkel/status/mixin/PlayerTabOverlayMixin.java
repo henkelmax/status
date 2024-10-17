@@ -8,6 +8,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.PlayerFaceRenderer;
 import net.minecraft.client.gui.components.PlayerTabOverlay;
 import net.minecraft.client.multiplayer.PlayerInfo;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
@@ -48,17 +49,17 @@ public class PlayerTabOverlayMixin {
         return playerInfo.getProfile();
     }
 
-    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/components/PlayerFaceRenderer;draw(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/resources/ResourceLocation;IIIZZ)V"))
-    private void onRenderHead(GuiGraphics guiGraphics, ResourceLocation resourceLocation, int x, int y, int size, boolean upsideDown, boolean renderHat) {
+    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/components/PlayerFaceRenderer;draw(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/resources/ResourceLocation;IIIZZI)V"))
+    private void onRenderHead(GuiGraphics guiGraphics, ResourceLocation resourceLocation, int x, int y, int size, boolean upsideDown, boolean renderHat, int l) {
         int shaderTexture = RenderSystem.getShaderTexture(0);
 
-        PlayerFaceRenderer.draw(guiGraphics, resourceLocation, x, y, size, upsideDown, renderHat);
+        PlayerFaceRenderer.draw(guiGraphics, resourceLocation, x, y, size, upsideDown, renderHat, l);
 
         ResourceLocation icon = StatusClient.STATE_MANAGER.getIcon(playerUUID);
         if (icon != null) {
             guiGraphics.pose().pushPose();
             guiGraphics.pose().translate(x + 9D, y, 0D);
-            guiGraphics.blit(icon, 0, 0, 0, 0, 8, 8, 8, 8);
+            guiGraphics.blit(RenderType::guiTextured, icon, 0, 0, 0, 0, 8, 8, 8, 8);
             guiGraphics.pose().popPose();
         }
 
@@ -66,7 +67,7 @@ public class PlayerTabOverlayMixin {
         if (overlay != null) {
             guiGraphics.pose().pushPose();
             guiGraphics.pose().translate(x + 9D, y, 0D);
-            guiGraphics.blit(overlay, 0, 0, 0, 0, 8, 8, 8, 8);
+            guiGraphics.blit(RenderType::guiTextured, overlay, 0, 0, 0, 0, 8, 8, 8, 8);
             guiGraphics.pose().popPose();
         }
 
