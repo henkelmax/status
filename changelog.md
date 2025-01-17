@@ -1,1 +1,1 @@
-- Added arabic translation
+- Added Turkish translation
