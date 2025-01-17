@@ -1,0 +1,15 @@
+{
+  "gui.status.title": "Durumunu Ayarla",
+  "key.status_gui": "Durum Arayüzünü Aç",
+  "message.status.mod_name": "Durum",
+  "message.status.change_status": "Durumunu ayarlamayı unutma",
+  "message.status.set_status": "Durumunu ayarlamak için Durum Arayüzü'nü aç",
+  "message.status.incompatible_version": "Durum mod sürümünüz bulunduğunuz sunucudaki sürümle uyumlu değil.\nLütfen modun %s sürümünü indirin.",
+  "message.status.no_availability": "Müsait Değil",
+  "message.status.do_not_disturb": "Rahatsız Etme",
+  "message.status.open": "Müsait",
+  "message.status.recording": "Kayıtta",
+  "message.status.streaming": "Yayında",
+  "message.status.no_sleep": "Uyuma",
+  "message.status.neutral": "Durum Yok"
+}
