@@ -57,7 +57,7 @@ public class ClientPlayerStateManager {
         stateChanged = true;
     }
 
-    public Availability getAvailability() {
+    public Availability getAvailabilityIcon() {
         return state.getAvailability();
     }
 
@@ -124,7 +124,7 @@ public class ClientPlayerStateManager {
     private static final ResourceLocation NEUTRAL = new ResourceLocation(Status.MODID, "textures/icons/neutral.png");
 
     @Nullable
-    public ResourceLocation getIcon(UUID player) {
+    public ResourceLocation getActivityIcon(UUID player) {
         PlayerState state = getState(player);
         if (state == null) {
             return null;
@@ -139,7 +139,7 @@ public class ClientPlayerStateManager {
     }
 
     @Nullable
-    public ResourceLocation getOverlay(UUID player) {
+    public ResourceLocation getAvailabilityIcon(UUID player) {
         PlayerState state = getState(player);
         if (state == null) {
             return null;
