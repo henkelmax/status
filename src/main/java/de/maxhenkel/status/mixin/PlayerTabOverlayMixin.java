@@ -14,6 +14,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
@@ -41,6 +42,7 @@ public class PlayerTabOverlayMixin {
         return font.width(formattedText) + 10;
     }
 
+    @Unique
     private UUID playerUUID;
 
     @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/PlayerInfo;getProfile()Lcom/mojang/authlib/GameProfile;"))
@@ -55,19 +57,19 @@ public class PlayerTabOverlayMixin {
 
         PlayerFaceRenderer.draw(guiGraphics, resourceLocation, x, y, size, upsideDown, renderHat, l);
 
-        ResourceLocation icon = StatusClient.STATE_MANAGER.getIcon(playerUUID);
-        if (icon != null) {
+        ResourceLocation availability = StatusClient.STATE_MANAGER.getAvailabilityIcon(playerUUID);
+        if (availability != null) {
             guiGraphics.pose().pushPose();
             guiGraphics.pose().translate(x + 9D, y, 0D);
-            guiGraphics.blit(RenderType::guiTextured, icon, 0, 0, 0, 0, 8, 8, 8, 8);
+            guiGraphics.blit(RenderType::guiTextured, availability, 0, 0, 0, 0, 8, 8, 8, 8);
             guiGraphics.pose().popPose();
         }
 
-        ResourceLocation overlay = StatusClient.STATE_MANAGER.getOverlay(playerUUID);
-        if (overlay != null) {
+        ResourceLocation activity = StatusClient.STATE_MANAGER.getActivityIcon(playerUUID);
+        if (activity != null) {
             guiGraphics.pose().pushPose();
             guiGraphics.pose().translate(x + 9D, y, 0D);
-            guiGraphics.blit(RenderType::guiTextured, overlay, 0, 0, 0, 0, 8, 8, 8, 8);
+            guiGraphics.blit(RenderType::guiTextured, activity, 0, 0, 0, 0, 8, 8, 8, 8);
             guiGraphics.pose().popPose();
         }
 

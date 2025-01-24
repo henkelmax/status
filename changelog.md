@@ -1,1 +1,1 @@
-- Added Turkish translation
+- Fixed icon rendering order

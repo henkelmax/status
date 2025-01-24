@@ -22,7 +22,7 @@ public class AvailabilityButton extends AbstractButton {
     }
 
     public boolean isAvailabilityActive() {
-        return StatusClient.STATE_MANAGER.getAvailability().equals(availability);
+        return StatusClient.STATE_MANAGER.getAvailabilityIcon().equals(availability);
     }
 
     @Override
