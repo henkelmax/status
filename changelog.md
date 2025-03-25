@@ -1,1 +1,1 @@
-- Fixed icon rendering order
+- Updated to 1.21.5

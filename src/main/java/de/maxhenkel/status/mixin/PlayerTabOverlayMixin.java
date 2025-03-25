@@ -53,8 +53,6 @@ public class PlayerTabOverlayMixin {
 
     @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/components/PlayerFaceRenderer;draw(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/resources/ResourceLocation;IIIZZI)V"))
     private void onRenderHead(GuiGraphics guiGraphics, ResourceLocation resourceLocation, int x, int y, int size, boolean upsideDown, boolean renderHat, int l) {
-        int shaderTexture = RenderSystem.getShaderTexture(0);
-
         PlayerFaceRenderer.draw(guiGraphics, resourceLocation, x, y, size, upsideDown, renderHat, l);
 
         ResourceLocation availability = StatusClient.STATE_MANAGER.getAvailabilityIcon(playerUUID);
@@ -72,8 +70,6 @@ public class PlayerTabOverlayMixin {
             guiGraphics.blit(RenderType::guiTextured, activity, 0, 0, 0, 0, 8, 8, 8, 8);
             guiGraphics.pose().popPose();
         }
-
-        RenderSystem.setShaderTexture(0, shaderTexture);
     }
 
 }

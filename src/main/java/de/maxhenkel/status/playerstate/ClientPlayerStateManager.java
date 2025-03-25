@@ -98,7 +98,7 @@ public class ClientPlayerStateManager {
                 .append(" ")
                 .append(Component.translatable("message.status.change_status")
                         .withStyle(style -> style
-                                .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Component.translatable("message.status.set_status")))
+                                .withHoverEvent(new HoverEvent.ShowText(Component.translatable("message.status.set_status")))
                         ).withStyle(ChatFormatting.WHITE)
                 )
         );
