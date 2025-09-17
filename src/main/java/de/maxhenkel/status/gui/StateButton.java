@@ -4,6 +4,7 @@ import de.maxhenkel.status.StatusClient;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.input.InputWithModifiers;
 import net.minecraft.network.chat.Component;
 
 public class StateButton extends AbstractButton {
@@ -16,7 +17,7 @@ public class StateButton extends AbstractButton {
     }
 
     @Override
-    public void onPress() {
+    public void onPress(InputWithModifiers inputWithModifiers) {
         StatusClient.STATE_MANAGER.setState(state);
     }
 

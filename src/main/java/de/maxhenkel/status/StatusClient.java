@@ -46,7 +46,7 @@ public class StatusClient implements ClientModInitializer {
             return CompletableFuture.completedFuture(buffer);
         });
 
-        KEY_STATUS_GUI = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.status_gui", GLFW.GLFW_KEY_U, "key.categories.misc"));
+        KEY_STATUS_GUI = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.status_gui", GLFW.GLFW_KEY_U, KeyMapping.Category.MISC));
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (KEY_STATUS_GUI.consumeClick()) {

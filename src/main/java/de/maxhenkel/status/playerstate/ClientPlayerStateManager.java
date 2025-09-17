@@ -110,7 +110,7 @@ public class ClientPlayerStateManager {
 
     @Nullable
     public PlayerState getState(UUID player) {
-        if (player.equals(Minecraft.getInstance().player.getGameProfile().getId())) {
+        if (player.equals(Minecraft.getInstance().player.getGameProfile().id())) {
             return state;
         }
         return states.get(player);

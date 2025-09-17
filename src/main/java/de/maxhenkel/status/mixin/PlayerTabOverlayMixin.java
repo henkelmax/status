@@ -45,7 +45,7 @@ public class PlayerTabOverlayMixin {
 
     @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/PlayerInfo;getProfile()Lcom/mojang/authlib/GameProfile;"))
     private GameProfile getProfile(PlayerInfo playerInfo) {
-        playerUUID = playerInfo.getProfile().getId();
+        playerUUID = playerInfo.getProfile().id();
         return playerInfo.getProfile();
     }
 

@@ -30,12 +30,12 @@ public class PlayerStateManager {
             PlayerState state = packet.getPlayerState();
             state.setPlayer(player.getUUID());
             states.put(player.getUUID(), state);
-            broadcastState(player.getServer(), state);
+            broadcastState(player.level().getServer(), state);
         });
     }
 
     private void onSleep(ServerPlayer player) {
-        List<ServerPlayer> noSleepPlayers = getNoSleepPlayers(player.getServer());
+        List<ServerPlayer> noSleepPlayers = getNoSleepPlayers(player.level().getServer());
 
         if (noSleepPlayers.isEmpty()) {
             return;
@@ -71,12 +71,12 @@ public class PlayerStateManager {
     private void notifyPlayer(ServerPlayer player) {
         PlayerStatesPacket packet = new PlayerStatesPacket(states);
         ServerPlayNetworking.send(player, packet);
-        broadcastState(player.getServer(), new PlayerState(player.getUUID()));
+        broadcastState(player.level().getServer(), new PlayerState(player.getUUID()));
     }
 
     private void removePlayer(ServerPlayer player) {
         states.remove(player.getUUID());
-        broadcastState(player.getServer(), new PlayerState(player.getUUID()));
+        broadcastState(player.level().getServer(), new PlayerState(player.getUUID()));
     }
 
     @Nullable
