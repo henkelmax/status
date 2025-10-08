@@ -81,29 +81,31 @@ public class StatusScreen extends StatusScreenBase {
         int y = guiTop + 7 + font.lineHeight + 7;
         int height = 20;
 
-        renderIcon(guiGraphics, NO_AVAILABILITY, x, y + 2);
+        renderIcon(guiGraphics, NO_AVAILABILITY, x, y + 2, true);
         y += height + 1;
 
-        renderIcon(guiGraphics, DND, x, y + 2);
+        renderIcon(guiGraphics, DND, x, y + 2, true);
         y += height + 1;
 
-        renderIcon(guiGraphics, OPEN, x, y + 2);
+        renderIcon(guiGraphics, OPEN, x, y + 2, true);
         y += height + 5;
 
-        renderIcon(guiGraphics, NEUTRAL, x, y + 2);
+        renderIcon(guiGraphics, NEUTRAL, x, y + 2, false);
         y += height + 1;
 
-        renderIcon(guiGraphics, RECORDING, x, y + 2);
+        renderIcon(guiGraphics, RECORDING, x, y + 2, false);
         y += height + 1;
 
-        renderIcon(guiGraphics, STREAMING, x, y + 2);
+        renderIcon(guiGraphics, STREAMING, x, y + 2, false);
 
         int titleWidth = font.width(getTitle());
         guiGraphics.drawString(font, getTitle(), guiLeft + (xSize - titleWidth) / 2, guiTop + 7, FONT_COLOR, false);
     }
 
-    private void renderIcon(GuiGraphics guiGraphics, ResourceLocation texture, int x, int y) {
-        guiGraphics.blit(RenderPipelines.GUI_TEXTURED, OUTLINE, x - 1, y - 1, 0, 0, 18, 18, 32, 32);
+    private void renderIcon(GuiGraphics guiGraphics, ResourceLocation texture, int x, int y, boolean outline) {
+        if (outline) {
+            guiGraphics.blit(RenderPipelines.GUI_TEXTURED, OUTLINE, x - 1, y - 1, 0, 0, 18, 18, 32, 32);
+        }
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, texture, x, y, 0, 0, 16, 16, 16, 16);
     }
 
