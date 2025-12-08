@@ -5,7 +5,7 @@ import de.maxhenkel.status.playerstate.PlayerState;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +13,7 @@ import java.util.UUID;
 
 public class PlayerStatesPacket implements Packet<PlayerStatesPacket> {
 
-    public static final Type<PlayerStatesPacket> PLAYER_STATES = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(Status.MODID, "states"));
+    public static final Type<PlayerStatesPacket> PLAYER_STATES = new CustomPacketPayload.Type<>(Identifier.fromNamespaceAndPath(Status.MODID, "states"));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, PlayerStatesPacket> CODEC = new StreamCodec<>() {
         @Override

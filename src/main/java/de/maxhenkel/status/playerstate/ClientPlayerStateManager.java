@@ -11,7 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentUtils;
 import net.minecraft.network.chat.HoverEvent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -116,15 +116,15 @@ public class ClientPlayerStateManager {
         return states.get(player);
     }
 
-    private static final ResourceLocation DND = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/dnd.png");
-    private static final ResourceLocation OPEN = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/open.png");
-    private static final ResourceLocation NO_AVAILABILITY = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/no_availability.png");
-    private static final ResourceLocation RECORDING = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/recording.png");
-    private static final ResourceLocation STREAMING = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/streaming.png");
-    private static final ResourceLocation NEUTRAL = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/neutral.png");
+    private static final Identifier DND = Identifier.fromNamespaceAndPath(Status.MODID, "textures/icons/dnd.png");
+    private static final Identifier OPEN = Identifier.fromNamespaceAndPath(Status.MODID, "textures/icons/open.png");
+    private static final Identifier NO_AVAILABILITY = Identifier.fromNamespaceAndPath(Status.MODID, "textures/icons/no_availability.png");
+    private static final Identifier RECORDING = Identifier.fromNamespaceAndPath(Status.MODID, "textures/icons/recording.png");
+    private static final Identifier STREAMING = Identifier.fromNamespaceAndPath(Status.MODID, "textures/icons/streaming.png");
+    private static final Identifier NEUTRAL = Identifier.fromNamespaceAndPath(Status.MODID, "textures/icons/neutral.png");
 
     @Nullable
-    public ResourceLocation getActivityIcon(UUID player) {
+    public Identifier getActivityIcon(UUID player) {
         PlayerState state = getState(player);
         if (state == null) {
             return null;
@@ -139,7 +139,7 @@ public class ClientPlayerStateManager {
     }
 
     @Nullable
-    public ResourceLocation getAvailabilityIcon(UUID player) {
+    public Identifier getAvailabilityIcon(UUID player) {
         PlayerState state = getState(player);
         if (state == null) {
             return null;

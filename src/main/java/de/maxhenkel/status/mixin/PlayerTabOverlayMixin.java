@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -49,11 +49,11 @@ public class PlayerTabOverlayMixin {
         return playerInfo.getProfile();
     }
 
-    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/components/PlayerFaceRenderer;draw(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/resources/ResourceLocation;IIIZZI)V"))
-    private void onRenderHead(GuiGraphics guiGraphics, ResourceLocation resourceLocation, int x, int y, int size, boolean upsideDown, boolean renderHat, int l) {
+    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/components/PlayerFaceRenderer;draw(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/resources/Identifier;IIIZZI)V"))
+    private void onRenderHead(GuiGraphics guiGraphics, Identifier resourceLocation, int x, int y, int size, boolean upsideDown, boolean renderHat, int l) {
         PlayerFaceRenderer.draw(guiGraphics, resourceLocation, x, y, size, upsideDown, renderHat, l);
 
-        ResourceLocation availability = StatusClient.STATE_MANAGER.getAvailabilityIcon(playerUUID);
+        Identifier availability = StatusClient.STATE_MANAGER.getAvailabilityIcon(playerUUID);
         if (availability != null) {
             guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(x + 9F, y);
@@ -61,7 +61,7 @@ public class PlayerTabOverlayMixin {
             guiGraphics.pose().popMatrix();
         }
 
-        ResourceLocation activity = StatusClient.STATE_MANAGER.getActivityIcon(playerUUID);
+        Identifier activity = StatusClient.STATE_MANAGER.getActivityIcon(playerUUID);
         if (activity != null) {
             guiGraphics.pose().pushMatrix();
             guiGraphics.pose().translate(x + 9F, y);

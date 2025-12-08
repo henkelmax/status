@@ -16,7 +16,7 @@ import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -30,7 +30,7 @@ public class Status implements ModInitializer {
     public static ServerConfig SERVER_CONFIG;
     public static PlayerStateManager STATE_MANAGER;
 
-    public static final ResourceLocation INIT = ResourceLocation.fromNamespaceAndPath(Status.MODID, "init");
+    public static final Identifier INIT = Identifier.fromNamespaceAndPath(Status.MODID, "init");
     public static int COMPATIBILITY_VERSION = -1;
 
     @Override

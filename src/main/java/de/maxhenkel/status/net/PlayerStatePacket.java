@@ -5,11 +5,11 @@ import de.maxhenkel.status.playerstate.PlayerState;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class PlayerStatePacket implements Packet<PlayerStatePacket> {
 
-    public static final Type<PlayerStatePacket> PLAYER_STATE = new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath(Status.MODID, "state"));
+    public static final Type<PlayerStatePacket> PLAYER_STATE = new CustomPacketPayload.Type<>(Identifier.fromNamespaceAndPath(Status.MODID, "state"));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, PlayerStatePacket> CODEC = new StreamCodec<>() {
         @Override

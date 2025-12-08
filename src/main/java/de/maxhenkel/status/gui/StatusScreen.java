@@ -6,18 +6,18 @@ import de.maxhenkel.status.playerstate.Availability;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class StatusScreen extends StatusScreenBase {
 
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/gui/gui_status.png");
-    private static final ResourceLocation OUTLINE = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/outline.png");
-    private static final ResourceLocation NO_AVAILABILITY = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/no_availability.png");
-    private static final ResourceLocation DND = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/dnd.png");
-    private static final ResourceLocation OPEN = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/open.png");
-    private static final ResourceLocation NEUTRAL = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/neutral.png");
-    private static final ResourceLocation RECORDING = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/recording.png");
-    private static final ResourceLocation STREAMING = ResourceLocation.fromNamespaceAndPath(Status.MODID, "textures/icons/streaming.png");
+    private static final Identifier TEXTURE = Identifier.fromNamespaceAndPath(Status.MODID, "textures/gui/gui_status.png");
+    private static final Identifier OUTLINE = Identifier.fromNamespaceAndPath(Status.MODID, "textures/icons/outline.png");
+    private static final Identifier NO_AVAILABILITY = Identifier.fromNamespaceAndPath(Status.MODID, "textures/icons/no_availability.png");
+    private static final Identifier DND = Identifier.fromNamespaceAndPath(Status.MODID, "textures/icons/dnd.png");
+    private static final Identifier OPEN = Identifier.fromNamespaceAndPath(Status.MODID, "textures/icons/open.png");
+    private static final Identifier NEUTRAL = Identifier.fromNamespaceAndPath(Status.MODID, "textures/icons/neutral.png");
+    private static final Identifier RECORDING = Identifier.fromNamespaceAndPath(Status.MODID, "textures/icons/recording.png");
+    private static final Identifier STREAMING = Identifier.fromNamespaceAndPath(Status.MODID, "textures/icons/streaming.png");
 
     public StatusScreen() {
         super(Component.translatable("gui.status.title"), 145, 184);
@@ -102,7 +102,7 @@ public class StatusScreen extends StatusScreenBase {
         guiGraphics.drawString(font, getTitle(), guiLeft + (xSize - titleWidth) / 2, guiTop + 7, FONT_COLOR, false);
     }
 
-    private void renderIcon(GuiGraphics guiGraphics, ResourceLocation texture, int x, int y, boolean outline) {
+    private void renderIcon(GuiGraphics guiGraphics, Identifier texture, int x, int y, boolean outline) {
         if (outline) {
             guiGraphics.blit(RenderPipelines.GUI_TEXTURED, OUTLINE, x - 1, y - 1, 0, 0, 18, 18, 32, 32);
         }

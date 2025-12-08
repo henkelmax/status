@@ -26,9 +26,10 @@ public class StateButton extends AbstractButton {
     }
 
     @Override
-    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
+    public void renderContents(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
         active = !isStateActive();
-        super.renderWidget(guiGraphics, mouseX, mouseY, delta);
+        renderDefaultSprite(guiGraphics);
+        renderDefaultLabel(guiGraphics.textRendererForWidget(this, GuiGraphics.HoveredTextEffects.NONE));
     }
 
     @Override
