@@ -9,7 +9,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientLoginNetworking;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -46,7 +46,7 @@ public class StatusClient implements ClientModInitializer {
             return CompletableFuture.completedFuture(buffer);
         });
 
-        KEY_STATUS_GUI = KeyBindingHelper.registerKeyBinding(new KeyMapping("key.status_gui", GLFW.GLFW_KEY_U, KeyMapping.Category.MISC));
+        KEY_STATUS_GUI = KeyMappingHelper.registerKeyMapping(new KeyMapping("key.status_gui", GLFW.GLFW_KEY_U, KeyMapping.Category.MISC));
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (KEY_STATUS_GUI.consumeClick()) {

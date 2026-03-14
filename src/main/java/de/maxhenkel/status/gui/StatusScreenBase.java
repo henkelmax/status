@@ -5,7 +5,7 @@ import net.minecraft.network.chat.Component;
 
 public class StatusScreenBase extends Screen {
 
-    protected static final int FONT_COLOR = 4210752;
+    protected static final int FONT_COLOR = 0xFF404040;
 
     protected int guiLeft;
     protected int guiTop;

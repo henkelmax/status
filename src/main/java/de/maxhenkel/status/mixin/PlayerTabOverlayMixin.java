@@ -3,8 +3,8 @@ package de.maxhenkel.status.mixin;
 import com.mojang.authlib.GameProfile;
 import de.maxhenkel.status.StatusClient;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.PlayerFaceRenderer;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.components.PlayerFaceExtractor;
 import net.minecraft.client.gui.components.PlayerTabOverlay;
 import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -22,20 +22,20 @@ import java.util.UUID;
 @Mixin(PlayerTabOverlay.class)
 public class PlayerTabOverlayMixin {
 
-    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/Connection;isEncrypted()Z"))
+    @Redirect(method = "extractRenderState", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/Connection;isEncrypted()Z"))
     private boolean isEncrypted(Connection connection) {
         return true;
     }
 
-    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphics;drawString(Lnet/minecraft/client/gui/Font;Lnet/minecraft/network/chat/Component;III)V"))
-    private void onDrawShadow(GuiGraphics instance, Font font, Component formattedCharSequence, int i, int j, int k) {
+    @Redirect(method = "extractRenderState", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;text(Lnet/minecraft/client/gui/Font;Lnet/minecraft/network/chat/Component;III)V"))
+    private void onDrawShadow(GuiGraphicsExtractor instance, Font font, Component formattedCharSequence, int i, int j, int k) {
         instance.pose().pushMatrix();
         instance.pose().translate(9F, 0F);
-        instance.drawString(font, formattedCharSequence, i, j, k);
+        instance.text(font, formattedCharSequence, i, j, k);
         instance.pose().popMatrix();
     }
 
-    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Font;width(Lnet/minecraft/network/chat/FormattedText;)I", ordinal = 0))
+    @Redirect(method = "extractRenderState", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/Font;width(Lnet/minecraft/network/chat/FormattedText;)I", ordinal = 0))
     private int onNameWidth(Font font, FormattedText formattedText) {
         return font.width(formattedText) + 10;
     }
@@ -43,15 +43,15 @@ public class PlayerTabOverlayMixin {
     @Unique
     private UUID playerUUID;
 
-    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/PlayerInfo;getProfile()Lcom/mojang/authlib/GameProfile;"))
+    @Redirect(method = "extractRenderState", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/PlayerInfo;getProfile()Lcom/mojang/authlib/GameProfile;"))
     private GameProfile getProfile(PlayerInfo playerInfo) {
         playerUUID = playerInfo.getProfile().id();
         return playerInfo.getProfile();
     }
 
-    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/components/PlayerFaceRenderer;draw(Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/resources/Identifier;IIIZZI)V"))
-    private void onRenderHead(GuiGraphics guiGraphics, Identifier resourceLocation, int x, int y, int size, boolean upsideDown, boolean renderHat, int l) {
-        PlayerFaceRenderer.draw(guiGraphics, resourceLocation, x, y, size, upsideDown, renderHat, l);
+    @Redirect(method = "extractRenderState", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/components/PlayerFaceExtractor;extractRenderState(Lnet/minecraft/client/gui/GuiGraphicsExtractor;Lnet/minecraft/resources/Identifier;IIIZZI)V"))
+    private void onRenderHead(GuiGraphicsExtractor guiGraphics, Identifier resourceLocation, int x, int y, int size, boolean upsideDown, boolean renderHat, int l) {
+        PlayerFaceExtractor.extractRenderState(guiGraphics, resourceLocation, x, y, size, upsideDown, renderHat, l);
 
         Identifier availability = StatusClient.STATE_MANAGER.getAvailabilityIcon(playerUUID);
         if (availability != null) {

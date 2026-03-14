@@ -42,9 +42,9 @@ public class Status implements ModInitializer {
             LOGGER.error("Failed to read compatibility version");
         }
 
-        PayloadTypeRegistry.playC2S().register(PlayerStatePacket.PLAYER_STATE, PlayerStatePacket.CODEC);
-        PayloadTypeRegistry.playS2C().register(PlayerStatePacket.PLAYER_STATE, PlayerStatePacket.CODEC);
-        PayloadTypeRegistry.playS2C().register(PlayerStatesPacket.PLAYER_STATES, PlayerStatesPacket.CODEC);
+        PayloadTypeRegistry.serverboundPlay().register(PlayerStatePacket.PLAYER_STATE, PlayerStatePacket.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(PlayerStatePacket.PLAYER_STATE, PlayerStatePacket.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(PlayerStatesPacket.PLAYER_STATES, PlayerStatesPacket.CODEC);
 
         STATE_MANAGER = new PlayerStateManager();
 

@@ -3,7 +3,7 @@ package de.maxhenkel.status.gui;
 import de.maxhenkel.status.Status;
 import de.maxhenkel.status.StatusClient;
 import de.maxhenkel.status.playerstate.Availability;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -68,14 +68,14 @@ public class StatusScreen extends StatusScreenBase {
     }
 
     @Override
-    public void renderBackground(GuiGraphics guiGraphics, int i, int j, float f) {
-        super.renderBackground(guiGraphics, i, j, f);
+    public void extractBackground(GuiGraphicsExtractor guiGraphics, int i, int j, float f) {
+        super.extractBackground(guiGraphics, i, j, f);
         guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, guiLeft, guiTop, 0, 0, xSize, ySize, 256, 256);
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        super.render(guiGraphics, mouseX, mouseY, partialTicks);
+    public void extractRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
+        super.extractRenderState(guiGraphics, mouseX, mouseY, partialTicks);
 
         int x = guiLeft + 10;
         int y = guiTop + 7 + font.lineHeight + 7;
@@ -99,10 +99,10 @@ public class StatusScreen extends StatusScreenBase {
         renderIcon(guiGraphics, STREAMING, x, y + 2, false);
 
         int titleWidth = font.width(getTitle());
-        guiGraphics.drawString(font, getTitle(), guiLeft + (xSize - titleWidth) / 2, guiTop + 7, FONT_COLOR, false);
+        guiGraphics.text(font, getTitle(), guiLeft + (xSize - titleWidth) / 2, guiTop + 7, FONT_COLOR, false);
     }
 
-    private void renderIcon(GuiGraphics guiGraphics, Identifier texture, int x, int y, boolean outline) {
+    private void renderIcon(GuiGraphicsExtractor guiGraphics, Identifier texture, int x, int y, boolean outline) {
         if (outline) {
             guiGraphics.blit(RenderPipelines.GUI_TEXTURED, OUTLINE, x - 1, y - 1, 0, 0, 18, 18, 32, 32);
         }
