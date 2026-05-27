@@ -50,7 +50,7 @@ public class StatusClient implements ClientModInitializer {
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (KEY_STATUS_GUI.consumeClick()) {
-                client.setScreen(new StatusScreen());
+                client.setScreenAndShow(new StatusScreen());
             }
         });
     }

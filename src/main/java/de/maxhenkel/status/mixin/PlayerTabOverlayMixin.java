@@ -6,9 +6,9 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.PlayerFaceExtractor;
 import net.minecraft.client.gui.components.PlayerTabOverlay;
+import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.resources.Identifier;
@@ -22,8 +22,8 @@ import java.util.UUID;
 @Mixin(PlayerTabOverlay.class)
 public class PlayerTabOverlayMixin {
 
-    @Redirect(method = "extractRenderState", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/Connection;isEncrypted()Z"))
-    private boolean isEncrypted(Connection connection) {
+    @Redirect(method = "extractRenderState", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/ClientPacketListener;onlineMode()Z"))
+    private boolean onlineMode(ClientPacketListener instance) {
         return true;
     }
 
