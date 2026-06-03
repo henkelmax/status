@@ -29,7 +29,8 @@
     "minecraft": "${minecraft_dependency}"
   },
   "breaks": {
-    "fabric-api": "${fabric_api_dependency_breaks}"
+    "fabric-api": "${fabric_api_dependency_breaks}",
+    "cosmetica": "*"
   },
   "custom": {
     "status": {
