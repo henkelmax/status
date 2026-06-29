@@ -5,6 +5,7 @@ import de.maxhenkel.status.events.PlayerEvents;
 import de.maxhenkel.status.net.PlayerStatePacket;
 import de.maxhenkel.status.net.PlayerStatesPacket;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetSubtitleTextPacket;
 import net.minecraft.network.protocol.game.ClientboundSetTitleTextPacket;
@@ -14,6 +15,7 @@ import net.minecraft.server.level.ServerPlayer;
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Predicate;
 
 public class PlayerStateManager {
 
@@ -72,6 +74,48 @@ public class PlayerStateManager {
         PlayerStatesPacket packet = new PlayerStatesPacket(states);
         ServerPlayNetworking.send(player, packet);
         broadcastState(player.level().getServer(), new PlayerState(player.getUUID()));
+        announceStatuses(player);
+    }
+
+    private void announceStatuses(ServerPlayer player) {
+        if (Status.SERVER_CONFIG == null || !Status.SERVER_CONFIG.announceStatusesOnLogin.get()) {
+            return;
+        }
+
+        // Only announce to clients with the mod
+        if (!ServerPlayNetworking.canSend(player, PlayerStatePacket.PLAYER_STATE)) {
+            return;
+        }
+
+        MinecraftServer server = player.level().getServer();
+        for (Availability availability : Availability.values()) {
+            announceGroup(player, server, availability.getColor(), availability.getTranslationKey(), state -> state.getAvailability() == availability);
+        }
+    }
+
+    private void announceGroup(ServerPlayer player, MinecraftServer server, ChatFormatting color, String labelKey, Predicate<PlayerState> matches) {
+        List<String> names = new ArrayList<>();
+        for (Map.Entry<UUID, PlayerState> entry : states.entrySet()) {
+            if (entry.getKey().equals(player.getUUID()) || !matches.test(entry.getValue())) {
+                continue;
+            }
+            ServerPlayer other = server.getPlayerList().getPlayer(entry.getKey());
+            if (other != null) {
+                names.add(other.getGameProfile().name());
+            }
+        }
+
+        if (names.isEmpty()) {
+            return;
+        }
+
+        names.sort(String.CASE_INSENSITIVE_ORDER);
+        player.sendSystemMessage(
+            Component.literal(" ■ ").withStyle(color)
+                .append(Component.translatable(labelKey).withStyle(ChatFormatting.WHITE))
+                .append(Component.literal(": ").withStyle(ChatFormatting.WHITE))
+                .append(Component.literal(String.join(", ", names)))
+        );
     }
 
     private void removePlayer(ServerPlayer player) {

@@ -56,3 +56,4 @@ set your status. The status is not persisted between playing sessions by default
 | `no_sleep_title`             | `No Sleep`                              | The title of the no sleep popup                                                      |
 | `no_sleep_player_subtitle`   | `%s does not want you to sleep`         | The subtitle of the no sleep popup if one player does not want to skip the night     |
 | `no_sleep_multiple_subtitle` | `Some players do not want you to sleep` | The subtitle of the no sleep popup if multiple players do not want to skip the night |
+| `announce_statuses_on_login`  | `false`                                 | If a player logging in should be privately shown the statuses of all other online players |
