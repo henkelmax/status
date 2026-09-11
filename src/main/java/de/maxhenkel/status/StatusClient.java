@@ -14,7 +14,7 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientLoginNetworking;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
-import org.lwjgl.glfw.GLFW;
+import org.lwjgl.sdl.SDLScancode;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -46,7 +46,7 @@ public class StatusClient implements ClientModInitializer {
             return CompletableFuture.completedFuture(buffer);
         });
 
-        KEY_STATUS_GUI = KeyMappingHelper.registerKeyMapping(new KeyMapping("key.status_gui", GLFW.GLFW_KEY_U, KeyMapping.Category.MISC));
+        KEY_STATUS_GUI = KeyMappingHelper.registerKeyMapping(new KeyMapping("key.status_gui", SDLScancode.SDL_SCANCODE_U, KeyMapping.Category.MISC));
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (KEY_STATUS_GUI.consumeClick()) {
